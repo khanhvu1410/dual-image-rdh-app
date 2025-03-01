@@ -1,0 +1,195 @@
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0 0 20px 0;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 65px;
+    margin: 0 20px;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    width: 40px;
+    height: 22px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.version-box {
+    background-color: rgb(240, 240, 240);
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 4px;
+}
+
+.right-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-box {
+    font-size: 14px;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.about-box:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+.github-icon-box, .setting-icon-box {
+    padding: 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.github-icon-box:hover, .setting-icon-box:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+.github-icon, .setting-icon {
+    width: 25px;
+    height: 25px;
+}
+
+h2 {
+    font-weight: normal;
+}
+
+h2, .sub-title {
+    text-align: center;
+}
+
+.main {
+    padding: 0 20px;
+}
+
+.option-container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.option-box {
+    width: 700px;
+    height: 45px;
+    border-radius: 8px;
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+}
+
+.embedding-box, .extracting-box {   
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.embedding-box {
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 2px 2px rgba(224, 224, 224, 0.2);
+}
+
+.process-container {
+    margin-top: 30px;
+}
+
+.step-box-container {
+    display: flex;
+    justify-content: center;
+}
+
+.step-box {
+    width: 680px;
+}
+
+.label-box {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.number-box {
+    margin-right: 8px;
+    padding: 4px 8px; 
+    border-radius: 20px;
+    background-color: rgb(84, 84, 84);
+    color: rgb(255, 255, 255);
+    font-size: 12px;
+}
+
+.step-label { 
+    font-size: 14px;
+}
+
+.border-box {
+    margin: 0 11px 0 11px;
+    padding: 0 20px 20px 20px;
+    border-left: 1px solid rgb(190, 190, 190);
+}
+
+.browse-file-box {
+    border: solid 5px rgb(240, 240, 240);
+    border-style: dashed;
+    border-radius: 10px;
+    height: 130px;
+}
+
+.description-box {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.browse-btn-box {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.browse-file-btn {
+    padding: 10px 14px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.browse-file-btn:hover {
+    background-color: rgb(225, 225, 225);
+}
+
+.next-btn-box {
+    display: flex;
+    justify-content: center;
+}
+
+.next-btn {
+    padding: 10px 0 10px 0;
+    width: 100%;
+    border: none;
+    background-color: rgb(230, 230, 230);
+    border-radius: 6px;
+}
