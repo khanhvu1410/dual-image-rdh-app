@@ -1,29 +1,29 @@
 import cv2
 import numpy as np
-from data_hiding.hiding import hide_data
-from data_hiding.restoring import restore_data
+from data_hiding.embedding import embed_data
+from data_hiding.extracting import extract_data
 
 def display_result(image: str, data: str):
     img = cv2.imread(image, cv2.IMREAD_UNCHANGED)
     d = cv2.imread(data, cv2.IMREAD_UNCHANGED)
 
-    image1, image2, extract_rule = hide_data(img, d)
+    image1, image2, extract_rule = embed_data(img, d)
     print("Image 1: ")
     print(image1)
     print("Image 2: ")
     print(image2)
 
-    restored_image, restored_data = restore_data(image1, image2, extract_rule)
+    restored_image, extracted_data = extract_data(image1, image2, extract_rule)
     print("Restored image: ")
     print(restored_image)
     print("Restored data: ")
-    print(restored_data)
+    print(extracted_data)
 
     h_image = np.hstack((img, restored_image))
-    h_data = np.hstack((d, restored_data))
+    h_data = np.hstack((d, extracted_data))
 
     cv2.imshow("Input image and restored image", h_image)
-    cv2.imshow("Input data and restored data", h_data)
+    cv2.imshow("Input data and extracted data", h_data)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

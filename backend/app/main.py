@@ -7,8 +7,8 @@ from fastapi import FastAPI, UploadFile, HTTPException, status
 from app.core.config import BASE_DIR, KEY_DIR
 from data_hiding.rule_creating import ExtractRule
 from app.schema import ExtractRuleResponse
-from data_hiding.hiding import hide_data
-from data_hiding.restoring import restore_data
+from data_hiding.embedding import embed_data
+from data_hiding.extracting import extract_data
 
 app = FastAPI()
 
@@ -18,16 +18,16 @@ async def read_image(file: UploadFile):
     image = cv2.imdecode(np_arr, cv2.IMREAD_UNCHANGED)
     return image
 
-@app.post("/images/encrypt/", response_model=ExtractRuleResponse)
-async def encrypt_image(image_file: UploadFile, data_file: UploadFile):
+@app.post("/image-embedding/", response_model=ExtractRuleResponse)
+async def embed_image(image_file: UploadFile, data_file: UploadFile):
     image = await read_image(image_file)
     data = await read_image(data_file)
 
-    image1, image2, extract_rule = hide_data(image, data)
+    image1, image2, extract_rule = embed_data(image, data)
 
     file_name = image_file.filename.split(".")
-    image1_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_encrypted_1.{file_name[1]}")
-    image2_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_encrypted_2.{file_name[1]}")
+    image1_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_1.{file_name[1]}")
+    image2_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_2.{file_name[1]}")
 
     cv2.imwrite(image1_path, image1)
     cv2.imwrite(image2_path, image2)
@@ -45,8 +45,8 @@ async def encrypt_image(image_file: UploadFile, data_file: UploadFile):
 
     return extract_rule
 
-@app.post("/images/decrypt/")
-async def decrypt_image(
+@app.post("/image-extracting/")
+async def extract_image(
     image_file_1: UploadFile,
     image_file_2: UploadFile,
     extract_rule_file: UploadFile
@@ -57,7 +57,7 @@ async def decrypt_image(
     if file_name_1[1] != file_name_2[1]:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Images must have the same file's extension"
+            detail="Images must have the same file's extension"
         )
 
     image1 = await read_image(image_file_1)
@@ -79,15 +79,15 @@ async def decrypt_image(
     extract_rule.extract_rule_max = dict(zip(max_keys, max_values))
     print(extract_rule.extract_rule_max)
 
-    restored_image, restored_data = restore_data(image1, image2, extract_rule)
-    restored_image_path = os.path.join(BASE_DIR, f"img/output_images/decrypted_image.{file_name_1[1]}")
-    restored_data_path = os.path.join(BASE_DIR, f"img/output_data/restored_data.{file_name_1[1]}")
+    restored_image, restored_data = extract_data(image1, image2, extract_rule)
+    restored_image_path = os.path.join(BASE_DIR, f"img/output_images/restored_image.{file_name_1[1]}")
+    restored_data_path = os.path.join(BASE_DIR, f"img/output_data/extracted_data.{file_name_1[1]}")
 
     cv2.imwrite(restored_image_path, restored_image)
     cv2.imwrite(restored_data_path, restored_data)
 
     return {
-        "message": "Image decrypted successfully",
+        "message": "Image extracted successfully",
     }
 
 @app.get("/")

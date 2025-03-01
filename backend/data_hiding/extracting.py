@@ -1,5 +1,4 @@
 import math
-import cv2
 import numpy as np
 from data_hiding.rule_creating import check_pixels, ExtractRule
 
@@ -35,7 +34,7 @@ def extract_bits(
 
     return x1, x2, bits
 
-def restore_data(image1: np.ndarray, image2: np.ndarray, extract_rule: ExtractRule):
+def extract_data(image1: np.ndarray, image2: np.ndarray, extract_rule: ExtractRule):
     img1 = np.int32(image1)
     img2 = np.int32(image2)
 

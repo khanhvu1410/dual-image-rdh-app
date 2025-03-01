@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 from data_hiding.rule_creating import check_pixels, transform_data, create_rule
 
@@ -35,7 +34,7 @@ def embed_bits(x1: int, x2: int, bits: str, embed_rule: dict):
 
     return x11, x12, x21, x22
 
-def hide_data(image: np.ndarray, data: np.ndarray):
+def embed_data(image: np.ndarray, data: np.ndarray):
     img = np.int32(image)
     m, n = img.shape
 
