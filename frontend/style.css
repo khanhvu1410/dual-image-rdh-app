@@ -1,17 +1,23 @@
-body {
-    font-family: "Roboto", sans-serif;
-    margin: 0 0 20px 0;
+html, body {
+    height: 100%;
 }
 
-.header {
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+}
+
+header {
+    min-height: 65px;
+    display: flex;
+    padding: 0 20px;
     justify-content: space-between;
-    height: 65px;
-    margin: 0 20px;
 }
 
 .left-section {
+    flex: 0.25;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,6 +38,7 @@ body {
 }
 
 .right-section {
+    flex: 0.25;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,25 +47,24 @@ body {
 .about-box {
     font-size: 14px;
     padding: 10px 12px;
-    cursor: pointer;
     border-radius: 4px;
-    cursor: pointer;
 }
 
 .about-box:hover {
+    cursor: pointer;
     background-color: rgb(240, 240, 240);
 }
 
 .github-icon-box, .setting-icon-box {
     padding: 12px;
     border-radius: 30px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .github-icon-box:hover, .setting-icon-box:hover {
+    cursor: pointer;
     background-color: rgb(235, 235, 235);
 }
 
@@ -69,14 +75,16 @@ body {
 
 h2 {
     font-weight: normal;
+    margin-top: 0;
 }
 
 h2, .sub-title {
     text-align: center;
 }
 
-.main {
+main {
     padding: 0 20px;
+    flex: 1;
 }
 
 .option-container {
@@ -91,12 +99,11 @@ h2, .sub-title {
     border-radius: 8px;
     background-color: rgb(240, 240, 240);
     display: flex;
-    justify-content: center;
     padding: 8px;
 }
 
 .embedding-box, .extracting-box {   
-    width: 50%;
+    flex: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -112,15 +119,14 @@ h2, .sub-title {
 
 .process-container {
     margin-top: 30px;
-}
-
-.step-box-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .step-box {
-    width: 680px;
+    max-width: 680px;
+    width: 100%;
 }
 
 .label-box {
@@ -144,41 +150,131 @@ h2, .sub-title {
 
 .border-box {
     margin: 0 11px 0 11px;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 25px 20px;
     border-left: 1px solid rgb(190, 190, 190);
 }
 
-.browse-file-box {
+.browse-host-box, .browse-hidden-box {
     border: solid 5px rgb(240, 240, 240);
     border-style: dashed;
     border-radius: 10px;
     height: 130px;
+    /* height: 200px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.description-box {
-    height: 50%;
+.description-box, .host-upload-box, .hidden-upload-box {
+    flex: 0.5;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
-.browse-btn-box {
-    height: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.file-icon, .add-icon, .reset-icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
 }
 
-.browse-file-btn {
-    padding: 10px 14px;
-    background-color: rgb(240, 240, 240);
-    border-radius: 6px;
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload, .reset-host-box, .reset-hidden-box {
     font-size: 15px;
-    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
 }
 
-.browse-file-btn:hover {
-    background-color: rgb(225, 225, 225);
+.custom-file-upload {
+    background-color: rgb(240, 240, 240);
+    margin-right: 8px;
+}
+
+.custom-file-upload p {
+    margin: 0;
+}
+
+.custom-file-upload:hover {
+    cursor: pointer;
+    background-color: rgb(222, 222, 222);
+}
+
+.host-box-container, .hidden-box-container {
+    flex: 0.6;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.host-image-box, .hidden-image-box {
+    height: 70px;
+    width: 110px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 8px;
+    padding: 20px 0 0 12px;
+    position: relative;
+    margin-right: 8px;
+}
+
+.host-image-box p, .hidden-image-box p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.host-image-box p:first-child {
+    margin-bottom: 5px;
+}
+
+.delete-host-box, .delete-hidden-box {
+    padding: 12px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.delete-host-box:hover, .delete-hidden-box:hover {
+    cursor: pointer;
+    background-color: rgb(230, 230, 230);
+}
+
+.delete-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.add-reset-container, .reset-container {
+    flex: 0.4;
+    width: 95%;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-reset-box, .reset-box {
+    display: flex;
+}
+
+.reset-host-box, .reset-hidden-box {
+    background-color: rgb(253, 236, 234);
+    color: rgb(97, 26, 21);
+}
+
+.reset-host-box:hover, .reset-hidden-box:hover {
+    cursor: pointer;
+    background-color: rgb(253, 219, 214);
+}
+
+.host-image-number, .hidden-image-number {
+    color: rgb(13, 60, 97);
+    font-size: 14px;
 }
 
 .next-btn-box {
@@ -186,10 +282,18 @@ h2, .sub-title {
     justify-content: center;
 }
 
-.next-btn {
+.host-next-btn, .hidden-next-btn {
     padding: 10px 0 10px 0;
     width: 100%;
     border: none;
     background-color: rgb(230, 230, 230);
     border-radius: 6px;
+    color: rgb(135, 135, 135);
+}
+
+footer {
+    min-height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
