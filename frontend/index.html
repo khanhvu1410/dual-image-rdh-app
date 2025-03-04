@@ -7,12 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>
     <header>
         <div class="left-section">
-            <img class="logo" src="icons/logo.png">
+            <img class="logo" src="resources/icons/logo.png">
             <div class="version-box">
                 v.2.3.6
             </div> 
@@ -22,10 +22,10 @@
                 About
             </div>
             <div class="github-icon-box">
-                <img class="github-icon" src="icons/github.svg">
+                <img class="github-icon" src="resources/icons/github.svg">
             </div>
             <div class="setting-icon-box">
-                <img class="setting-icon" src="icons/setting.svg"> 
+                <img class="setting-icon" src="resources/icons/setting.svg"> 
             </div>
         </div>        
     </header>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="host-upload-box">
                             <label for="host-image-upload" class="custom-file-upload">
-                                <img class="file-icon" src="icons/file.svg">
+                                <img class="file-icon" src="resources/icons/file.svg">
                                 <p>Browse Files</p>
                             </label>
                             <input id="host-image-upload" type="file" multiple />                                            
@@ -75,12 +75,12 @@
                         <div class="add-reset-container">
                             <div class="add-reset-box">
                                 <label for="host-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="icons/file.svg">
+                                    <img class="file-icon" src="resources/icons/file.svg">
                                     <p>Browse Files</p>
                                 </label>
                                 <input id="host-image-upload" type="file" multiple />
                                 <div class="reset-host-box">
-                                    <img class="reset-icon" src="icons/reset.svg">
+                                    <img class="reset-icon" src="resources/icons/reset.svg">
                                     Reset
                                 </div>
                             </div>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="hidden-upload-box">
                             <label for="hidden-image-upload" class="custom-file-upload">
-                                <img class="file-icon" src="icons/file.svg">
+                                <img class="file-icon" src="resources/icons/file.svg">
                                 <p>Browse File</p>
                             </label>
                             <input id="hidden-image-upload" type="file" />                                            
@@ -121,11 +121,10 @@
                         <div class="reset-container">
                             <div class="reset-box">
                                 <div class="reset-hidden-box">
-                                    <img class="reset-icon" src="icons/reset.svg">
+                                    <img class="reset-icon" src="resources/icons/reset.svg">
                                     Reset
                                 </div>
                             </div>
-                            <div class="hidden-image-number"></div>
                         </div>
                     </div>
                 </div>
@@ -151,6 +150,7 @@
         <p>Built and developed by khanhvu-utc</p>
     </footer>
     
-    <script type="module" src="main.js"></script>
+    <script src="vendors/jquery/jquery-3.7.1.min.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

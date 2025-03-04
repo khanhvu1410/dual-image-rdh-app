@@ -205,7 +205,7 @@ input[type="file"] {
 
 .host-box-container, .hidden-box-container {
     flex: 0.6;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -253,7 +253,7 @@ input[type="file"] {
 .add-reset-container, .reset-container {
     flex: 0.4;
     width: 95%;
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }
@@ -272,7 +272,7 @@ input[type="file"] {
     background-color: rgb(253, 219, 214);
 }
 
-.host-image-number, .hidden-image-number {
+.host-image-number {
     color: rgb(13, 60, 97);
     font-size: 14px;
 }
@@ -289,6 +289,10 @@ input[type="file"] {
     background-color: rgb(230, 230, 230);
     border-radius: 6px;
     color: rgb(135, 135, 135);
+}
+
+.hidden-next-btn {
+    display: none;
 }
 
 footer {
