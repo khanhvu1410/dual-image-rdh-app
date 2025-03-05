@@ -1,45 +1,24 @@
+import { formatBytes, shortenName, isFileEqual } from "./file-utils.js";
+
 const hostUploadInput = document.querySelector("#host-image-upload");
 
-let fileList = new DataTransfer();
-
-function formatBytes(bytes, decimals = 2) {
-    if (!+bytes) return '0 Bytes';
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
-}
+let hostImageList = new DataTransfer();
 
 function renderFiles() {
-    const files = fileList.files;
+    const files = hostImageList.files;
 
     let htmls = "";
     let sumSize = 0;
     for (let i = 0; i < files.length; i++) {
-        let fileName = "";
-        if (files[i].name.length > 12) {
-            for (let j = 0; j < 12; j++) {
-                fileName += files[i].name[j];
-            }
-            fileName += "..."; 
-        } else {
-            fileName = files[i].name;
-        }
-        
         htmls += `
             <div class="host-image-box">
-                <p>${fileName}</p>
-                <p>${formatBytes(files[i].size)}</p>
+                <p>${shortenName(files[i].name, 12)}</p>
+                <p style="color:rgb(135, 135, 135)">${formatBytes(files[i].size)}</p>
                 <div class="delete-host-box" onclick="import('./js/host-image.js').then(module => module.removeFile(${i}))">
-                    <img class="delete-icon" src="resources/icons/delete.svg">
+                    <img class="delete-icon" src="resources/css/icons/delete.svg">
                 </div>
             </div>
         `;
-
         sumSize += files[i].size;
     }
 
@@ -52,43 +31,61 @@ function renderFiles() {
     }
 }
 
-function removeFile(index)
+export function removeFile(index)
 {
-    fileList.items.remove(index);
-    if (fileList.items.length <= 0) {
-        hostUploadInput.files = fileList.files;
+    hostImageList.items.remove(index);
+    if (hostImageList.items.length <= 0) {
+        hostUploadInput.files = hostImageList.files;
         switchToBrowseMode();
     }
     renderFiles();
 }
 
-function handleBrowseHostImage() {
-    hostUploadInput.onchange = function() {
+async function checkFileExist(file) {
+    for (let f of hostImageList.files) {
+        if (await isFileEqual(file, f)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+export function handleBrowseHostImage() {
+    hostUploadInput.onchange = async function() {
         for (let file of hostUploadInput.files) {
-            fileList.items.add(file);
+            if (!await checkFileExist(file)) {
+                hostImageList.items.add(file);
+            }
         }
         switchToAddMode();
         renderFiles();        
     };
 
     $(".reset-host-box").on("click", function() {
-        fileList.items.clear();
-        hostUploadInput.files = fileList.files;
+        hostImageList.items.clear();
+        hostUploadInput.files = hostImageList.files;
         switchToBrowseMode();
     });  
+
+    $(".host-next-btn").on("click", function() {
+        $(".slide-box").eq(0).slideUp();
+        $(".slide-box").eq(1).slideDown();
+        $(".number-box").eq(0).css("background-color", "rgb(150, 150, 150)");
+        $(".number-box").eq(1).css("background-color", "rgb(84, 84, 84)");
+    });
 }
 
 function switchToAddMode() {
     $(".browse-host-box").css("height", "200px");
 
-    $(".description-box").hide();
+    $(".description-box").eq(0).hide();
     $(".host-upload-box").hide();
 
     $(".host-box-container").show();
     $(".add-reset-container").show();
 
     const customFileUpload = document.querySelectorAll(".custom-file-upload");
-    customFileUpload[1].children[0].setAttribute("src", "resources/icons/add.svg");
+    customFileUpload[1].children[0].setAttribute("src", "resources/css/icons/add.svg");
     customFileUpload[1].children[1].textContent = "Add Files";
     
     $(".host-next-btn").prop("disabled", false);
@@ -116,7 +113,7 @@ function switchToAddMode() {
 function switchToBrowseMode() {
     $(".browse-host-box").css("height", "130px");
 
-    $(".description-box").show();
+    $(".description-box").eq(0).show();
     $(".host-upload-box").show();
 
     $(".host-box-container").hide();
@@ -131,5 +128,3 @@ function switchToBrowseMode() {
 
     $(".host-next-btn").off("mouseenter mouseleave");
 }
-
-export { handleBrowseHostImage, removeFile};

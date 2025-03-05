@@ -163,6 +163,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 18px;
 }
 
 .description-box, .host-upload-box, .hidden-upload-box {
@@ -181,7 +182,7 @@ input[type="file"] {
     display: none;
 }
 
-.custom-file-upload, .reset-host-box, .reset-hidden-box {
+.custom-file-upload, .reset-host-box {
     font-size: 15px;
     padding: 10px 14px;
     border-radius: 6px;
@@ -220,12 +221,19 @@ input[type="file"] {
     margin-right: 8px;
 }
 
+.hidden-image-box {
+    width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .host-image-box p, .hidden-image-box p {
     margin: 0;
     font-size: 14px;
 }
 
-.host-image-box p:first-child {
+.host-image-box p:first-child, .hidden-image-box p:first-child {
     margin-bottom: 5px;
 }
 
@@ -250,24 +258,31 @@ input[type="file"] {
     height: 18px;
 }
 
-.add-reset-container, .reset-container {
+.add-reset-container, .change-file-box {
     flex: 0.4;
     width: 95%;
     display: flex;
     align-items: center;
+}
+
+.add-reset-container {
     justify-content: space-between;
 }
 
-.add-reset-box, .reset-box {
+.change-file-box {
+    justify-content: center;
+}
+
+.add-reset-box {
     display: flex;
 }
 
-.reset-host-box, .reset-hidden-box {
+.reset-host-box {
     background-color: rgb(253, 236, 234);
     color: rgb(97, 26, 21);
 }
 
-.reset-host-box:hover, .reset-hidden-box:hover {
+.reset-host-box:hover {
     cursor: pointer;
     background-color: rgb(253, 219, 214);
 }
@@ -279,20 +294,33 @@ input[type="file"] {
 
 .next-btn-box {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
-.host-next-btn, .hidden-next-btn {
+.host-next-btn, .hidden-next-btn, .hidden-back-btn {
     padding: 10px 0 10px 0;
     width: 100%;
     border: none;
-    background-color: rgb(230, 230, 230);
     border-radius: 6px;
+}
+
+.host-next-btn, .hidden-next-btn {
+    background-color: rgb(230, 230, 230);
     color: rgb(135, 135, 135);
 }
 
+.hidden-back-btn {
+    flex: 0.11;
+    background-color: rgb(235, 235, 235);
+}
+
 .hidden-next-btn {
-    display: none;
+    flex: 0.875;
+}
+
+.hidden-back-btn:hover {
+    cursor: pointer;
+    background-color: rgb(240, 240, 240);
 }
 
 footer {

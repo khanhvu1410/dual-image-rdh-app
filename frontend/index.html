@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="left-section">
-            <img class="logo" src="resources/icons/logo.png">
+            <img class="logo" src="resources/css/icons/logo.png">
             <div class="version-box">
                 v.2.3.6
             </div> 
@@ -22,10 +22,10 @@
                 About
             </div>
             <div class="github-icon-box">
-                <img class="github-icon" src="resources/icons/github.svg">
+                <img class="github-icon" src="resources/css/icons/github.svg">
             </div>
             <div class="setting-icon-box">
-                <img class="setting-icon" src="resources/icons/setting.svg"> 
+                <img class="setting-icon" src="resources/css/icons/setting.svg"> 
             </div>
         </div>        
     </header>
@@ -51,50 +51,42 @@
                     <div class="number-box">1</div>
                     <p class="step-label">Choose host images</p>
                 </div>
+                
                 <div class="border-box">
-                    <div class="browse-host-box">
-                        <div class="description-box">
-                            Drag & Drop or Browse Files
-                        </div>
-                        <div class="host-upload-box">
-                            <label for="host-image-upload" class="custom-file-upload">
-                                <img class="file-icon" src="resources/icons/file.svg">
-                                <p>Browse Files</p>
-                            </label>
-                            <input id="host-image-upload" type="file" multiple />                                            
-                        </div>
-                        <div class="host-box-container">
-                            <!-- <div class="host-image-box">
-                                <p>7.bmp</p>
-                                <p>257.05 KB</p>
-                                <div class="delete-host-box">
-                                    <img class="delete-icon" src="icons/delete.svg">
-                                </div>
-                            </div> -->
-                        </div>
-                        <div class="add-reset-container">
-                            <div class="add-reset-box">
+                    <div class="slide-box">
+                        <div class="browse-host-box">
+                            <div class="description-box">
+                                Drag & Drop or Browse Files
+                            </div>
+                            <div class="host-upload-box">
                                 <label for="host-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/icons/file.svg">
+                                    <img class="file-icon" src="resources/css/icons/file.svg">
                                     <p>Browse Files</p>
                                 </label>
-                                <input id="host-image-upload" type="file" multiple />
-                                <div class="reset-host-box">
-                                    <img class="reset-icon" src="resources/icons/reset.svg">
-                                    Reset
-                                </div>
+                                <input id="host-image-upload" type="file" accept="image/*" multiple />                                            
                             </div>
-                            <div class="host-image-number">
-                                <!-- 1 file -->
+                            <div class="host-box-container"></div>
+                            <div class="add-reset-container">
+                                <div class="add-reset-box">
+                                    <label for="host-image-upload" class="custom-file-upload">
+                                        <img class="file-icon" src="resources/css/icons/file.svg">
+                                        <p>Browse Files</p>
+                                    </label>
+                                    <input id="host-image-upload" type="file" accept="image/*" multiple />
+                                    <div class="reset-host-box">
+                                        <img class="reset-icon" src="resources/css/icons/reset.svg">
+                                        Reset
+                                    </div>
+                                </div>
+                                <div class="host-image-number"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="border-box">
-                    <div class="next-btn-box">
-                        <button class="host-next-btn">
-                            NEXT
-                        </button>
+    
+                        <div class="next-btn-box">
+                            <button class="host-next-btn">
+                                NEXT
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -104,35 +96,39 @@
                     <div class="number-box">2</div>
                     <p class="step-label">Choose the image to hide</p>
                 </div>
+                
                 <div class="border-box">
-                    <div class="browse-hidden-box">
-                        <div class="description-box">
-                            Drag & Drop or Browse File
-                        </div>
-                        <div class="hidden-upload-box">
-                            <label for="hidden-image-upload" class="custom-file-upload">
-                                <img class="file-icon" src="resources/icons/file.svg">
-                                <p>Browse File</p>
-                            </label>
-                            <input id="hidden-image-upload" type="file" />                                            
-                        </div>
-                        <div class="hidden-box-container">
-                        </div>
-                        <div class="reset-container">
-                            <div class="reset-box">
-                                <div class="reset-hidden-box">
-                                    <img class="reset-icon" src="resources/icons/reset.svg">
-                                    Reset
-                                </div>
+                    <div class="slide-box">
+                        <div class="browse-hidden-box">
+                            <div class="description-box">
+                                Drag & Drop or Browse File
+                            </div>
+                            <div class="hidden-upload-box">
+                                <label for="hidden-image-upload" class="custom-file-upload">
+                                    <img class="file-icon" src="resources/css/icons/file.svg">
+                                    <p>Browse File</p>
+                                </label>
+                                <input id="hidden-image-upload" accept="image/*" type="file" />                                            
+                            </div>
+                            <div class="hidden-box-container"></div>
+                            <div class="change-file-box">
+                                <label for="hidden-image-upload" class="custom-file-upload">
+                                    <img class="file-icon" src="resources/css/icons/file.svg">
+                                    <p>Browse File</p>
+                                </label>
+                                <input id="hidden-image-upload" accept="image/*" type="file" />
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="border-box">
-                    <div class="next-btn-box">
-                        <button class="hidden-next-btn">
-                            NEXT
-                        </button>
+    
+                        <div class="next-btn-box">
+                            <button class="hidden-back-btn">
+                                BACK
+                            </button>
+                            
+                            <button class="hidden-next-btn">
+                                NEXT
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,6 +146,7 @@
         <p>Built and developed by khanhvu-utc</p>
     </footer>
     
+    <script src="https://cdn.jsdelivr.net/npm/blob-compare@latest"></script>
     <script src="vendors/jquery/jquery-3.7.1.min.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
