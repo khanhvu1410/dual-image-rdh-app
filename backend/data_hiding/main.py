@@ -2,12 +2,24 @@ import cv2
 import numpy as np
 from data_hiding.embedding import embed_data
 from data_hiding.extracting import extract_data
+from data_hiding.rule_creating import create_rule, transform_data
+
 
 def display_result(image: str, data: str):
     img = cv2.imread(image, cv2.IMREAD_UNCHANGED)
     d = cv2.imread(data, cv2.IMREAD_UNCHANGED)
 
-    image1, image2, extract_rule = embed_data(img, d)
+    td = transform_data(d)
+    embed_rule, extract_rule = create_rule(td)
+    print("Embedding rule: ")
+    print(embed_rule)
+    print("Extracting rule min: ")
+    print(extract_rule.extract_rule_min)
+    print("Extracting rule max: ")
+    print(extract_rule.extract_rule_max)
+
+
+    image1, image2 = embed_data(img, td, embed_rule)
     print("Image 1: ")
     print(image1)
     print("Image 2: ")

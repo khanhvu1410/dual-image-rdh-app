@@ -2,7 +2,7 @@ import { formatBytes, shortenName, isFileEqual } from "./file-utils.js";
 
 const hostUploadInput = document.querySelector("#host-image-upload");
 
-let hostImageList = new DataTransfer();
+export let hostImageList = new DataTransfer();
 
 function renderFiles() {
     const files = hostImageList.files;
