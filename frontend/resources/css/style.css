@@ -10,7 +10,7 @@ body {
 }
 
 header {
-    min-height: 65px;
+    min-height: 50px;
     display: flex;
     padding: 0 20px;
     justify-content: space-between;
@@ -324,7 +324,7 @@ input[type="file"] {
 }
 
 footer {
-    min-height: 65px;
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

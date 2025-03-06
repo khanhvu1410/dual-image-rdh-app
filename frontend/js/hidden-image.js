@@ -1,4 +1,5 @@
 import { formatBytes, shortenName } from "./file-utils.js";
+import { hostImageList } from "./host-image.js";
 
 const hiddenUploadInput = document.querySelector("#hidden-image-upload");
 
@@ -24,9 +25,24 @@ export function removeFile() {
     switchToBrowseMode();
 }
 
+function embedImage(formData) {
+    fetch("http://localhost:8000/image-embedding/", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+        })
+        .catch(error => {
+            alert(`Error: ${error}`);
+        });
+}
+
 export function handleBrowseHiddenImage() {
     hiddenUploadInput.onchange = function() {
         switchToChangeMode();
+        hiddenImageList.items.clear();
         hiddenImageList.items.add(hiddenUploadInput.files[0]);
         renderFile(hiddenUploadInput.files[0]);
     };
@@ -34,6 +50,20 @@ export function handleBrowseHiddenImage() {
     $(".hidden-back-btn").on("click", function() {
         $(".slide-box").eq(0).slideDown();
         $(".slide-box").eq(1).slideUp();
+
+        $(".number-box").eq(0).css("background-color", "rgb(84, 84, 84)");
+        $(".number-box").eq(1).css("background-color", "rgb(150, 150, 150)");
+    });
+
+    $(".hidden-next-btn").on("click", function() {
+        const formData = new FormData();
+        
+        for (let file of hostImageList.files) {
+            formData.append("image_files", file);
+        }
+
+        formData.append("data_file", hiddenImageList.files[0]);
+        embedImage(formData);
     });
 }
 

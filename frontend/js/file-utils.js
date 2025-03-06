@@ -13,8 +13,8 @@ export function formatBytes(bytes, decimals = 2) {
 export function shortenName(name, maxLength) {
     let fileName = "";
     if (name.length > maxLength) {
-        for (let j = 0; j < maxLength; j++) {
-            fileName += name[j];
+        for (let i = 0; i < maxLength; i++) {
+            fileName += name[i];
         }
         fileName += "..."; 
     } else {

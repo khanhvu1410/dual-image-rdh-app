@@ -4,13 +4,27 @@ import numpy as np
 import uvicorn
 import json
 from fastapi import FastAPI, UploadFile, HTTPException, status
+from starlette.middleware.cors import CORSMiddleware
+
 from app.core.config import BASE_DIR, KEY_DIR
-from data_hiding.rule_creating import ExtractRule
+from data_hiding.rule_creating import ExtractRule, create_rule, transform_data
 from app.schema import ExtractRuleResponse
 from data_hiding.embedding import embed_data
 from data_hiding.extracting import extract_data
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5500"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 async def read_image(file: UploadFile):
     contents = await file.read()
@@ -19,18 +33,10 @@ async def read_image(file: UploadFile):
     return image
 
 @app.post("/image-embedding/", response_model=ExtractRuleResponse)
-async def embed_image(image_file: UploadFile, data_file: UploadFile):
-    image = await read_image(image_file)
+async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     data = await read_image(data_file)
-
-    image1, image2, extract_rule = embed_data(image, data)
-
-    file_name = image_file.filename.split(".")
-    image1_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_1.{file_name[1]}")
-    image2_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_2.{file_name[1]}")
-
-    cv2.imwrite(image1_path, image1)
-    cv2.imwrite(image2_path, image2)
+    transformed_data = transform_data(data)
+    embed_rule, extract_rule = create_rule(transformed_data)
 
     extract_rule_dict = {
         "data_length": extract_rule.data_length,
@@ -39,9 +45,21 @@ async def embed_image(image_file: UploadFile, data_file: UploadFile):
     }
 
     extract_rule_json = json.dumps(extract_rule_dict, indent=4)
-    extract_rule_path = os.path.join(KEY_DIR, f"{file_name[0]}_extract_rule.json")
+    extract_rule_path = os.path.join(KEY_DIR, f"{data_file.filename.split(".")[0]}_extract_rule.json")
     with open(extract_rule_path, "w") as f:
         f.write(extract_rule_json)
+
+    for image_file in image_files:
+        image = await read_image(image_file)
+
+        image1, image2 = embed_data(image, transformed_data, embed_rule)
+
+        file_name = image_file.filename.split(".")
+        image1_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_1.{file_name[1]}")
+        image2_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_2.{file_name[1]}")
+
+        cv2.imwrite(image1_path, image1)
+        cv2.imwrite(image2_path, image2)
 
     return extract_rule
 

@@ -34,20 +34,11 @@ def embed_bits(x1: int, x2: int, bits: str, embed_rule: dict):
 
     return x11, x12, x21, x22
 
-def embed_data(image: np.ndarray, data: np.ndarray):
+def embed_data(image: np.ndarray, data: str, embed_rule: dict):
     img = np.int32(image)
     m, n = img.shape
 
-    d = transform_data(data)
-    data_length = len(d)
-
-    embed_rule, extract_rule = create_rule(d)
-    # print("Embed rule: ")
-    # print(embed_rule)
-    # print("Extract rule min: ")
-    # print(extract_rule.extract_rule_min)
-    # print("Extract rule max: ")
-    # print(extract_rule.extract_rule_max)
+    data_length = len(data)
 
     img1 = img.copy()
     img2 = img.copy()
@@ -61,7 +52,7 @@ def embed_data(image: np.ndarray, data: np.ndarray):
                 x11, x12, x21, x22 = embed_bits(
                     img[i, j],
                     img[i, j+1],
-                    d[k:k+4],
+                    data[k:k+4],
                     embed_rule
                 )
                 img1[i, j] = x11
@@ -70,4 +61,4 @@ def embed_data(image: np.ndarray, data: np.ndarray):
                 img2[i, j+1] = x22
                 k += 4
 
-    return np.uint8(img1), np.uint8(img2), extract_rule
+    return np.uint8(img1), np.uint8(img2)
