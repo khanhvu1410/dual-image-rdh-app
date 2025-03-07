@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="left-section">
-            <img class="logo" src="resources/css/icons/logo.png">
+            <img class="logo" src="images/logo.png">
             <div class="version-box">
                 v.2.3.6
             </div> 
@@ -60,7 +60,7 @@
                             </div>
                             <div class="host-upload-box">
                                 <label for="host-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg">
+                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
                                     <p>Browse Files</p>
                                 </label>
                                 <input id="host-image-upload" type="file" accept="image/*" multiple />                                            
@@ -68,13 +68,8 @@
                             <div class="host-box-container"></div>
                             <div class="add-reset-container">
                                 <div class="add-reset-box">
-                                    <label for="host-image-upload" class="custom-file-upload">
-                                        <img class="file-icon" src="resources/css/icons/file.svg">
-                                        <p>Browse Files</p>
-                                    </label>
-                                    <input id="host-image-upload" type="file" accept="image/*" multiple />
                                     <div class="reset-host-box">
-                                        <img class="reset-icon" src="resources/css/icons/reset.svg">
+                                        <img class="reset-icon" src="resources/css/icons/reset.svg" alt="reset-icon">
                                         Reset
                                     </div>
                                 </div>
@@ -83,7 +78,7 @@
                         </div>
     
                         <div class="next-btn-box">
-                            <button class="host-next-btn">
+                            <button type="button" class="host-next-btn">
                                 NEXT
                             </button>
                         </div>
@@ -105,27 +100,21 @@
                             </div>
                             <div class="hidden-upload-box">
                                 <label for="hidden-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg">
+                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
                                     <p>Browse File</p>
                                 </label>
                                 <input id="hidden-image-upload" accept="image/*" type="file" />                                            
                             </div>
                             <div class="hidden-box-container"></div>
-                            <div class="change-file-box">
-                                <label for="hidden-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg">
-                                    <p>Browse File</p>
-                                </label>
-                                <input id="hidden-image-upload" accept="image/*" type="file" />
-                            </div>
+                            <div class="change-file-box"></div>
                         </div>
     
                         <div class="next-btn-box">
-                            <button class="hidden-back-btn">
+                            <button type="button" class="back-btn">
                                 BACK
                             </button>
                             
-                            <button class="hidden-next-btn">
+                            <button type="button" class="hidden-next-btn">
                                 NEXT
                             </button>
                         </div>
@@ -137,6 +126,24 @@
                 <div class="label-box">
                     <div class="number-box">3</div>
                     <p class="step-label">Download embedded images & Key</p>
+                </div>
+                
+                <div class="border-box">
+                    <div class="slide-box">
+                        <div class="zip-file-box">
+                            <img class="lock-icon" src="resources/css/icons/lock.svg" alt="lock-icon">
+                            <p><span class="zip-file-name"></span> was loaded successfully and ready to download</p>
+                        </div>
+                        <div class="next-btn-box">
+                            <button type="button" class="back-btn">
+                                BACK
+                            </button>
+                            
+                            <a class="download-btn">
+                                DOWNLOAD
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

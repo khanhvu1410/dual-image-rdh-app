@@ -5,6 +5,8 @@ const hiddenUploadInput = document.querySelector("#hidden-image-upload");
 
 let hiddenImageList = new DataTransfer();
 
+export let downloadUrl;
+
 function renderFile(file) {
     const html = `
         <div class="hidden-image-box">
@@ -26,16 +28,30 @@ export function removeFile() {
 }
 
 function embedImage(formData) {
+    let zipFileName = "";
+
     fetch("http://localhost:8000/image-embedding/", {
         method: "POST",
         body: formData
     })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
+        .then(response => {
+            const header = response.headers.get("content-disposition");
+            const parts = header.split(";");
+            zipFileName = parts[1].split("=")[1];
+            return response.blob();
+        })
+        .then(blob => {
+            downloadUrl = URL.createObjectURL(blob);
+            
+            $(".download-btn").attr({
+                "href": `${downloadUrl}`,
+                "download": `${zipFileName}`
+            });
+
+            $(".zip-file-name").text(`${zipFileName}`);
         })
         .catch(error => {
-            alert(`Error: ${error}`);
+            alert(error);
         });
 }
 
@@ -47,7 +63,7 @@ export function handleBrowseHiddenImage() {
         renderFile(hiddenUploadInput.files[0]);
     };
 
-    $(".hidden-back-btn").on("click", function() {
+    $(".back-btn").eq(0).on("click", function() {
         $(".slide-box").eq(0).slideDown();
         $(".slide-box").eq(1).slideUp();
 
@@ -64,6 +80,11 @@ export function handleBrowseHiddenImage() {
 
         formData.append("data_file", hiddenImageList.files[0]);
         embedImage(formData);
+
+        $(".slide-box").eq(1).slideUp();
+        $(".slide-box").eq(2).slideDown();
+        $(".number-box").eq(1).css("background-color", "rgb(150, 150, 150)");
+        $(".number-box").eq(2).css("background-color", "rgb(84, 84, 84)");        
     });
 }
 
@@ -76,8 +97,8 @@ function switchToChangeMode() {
     $(".hidden-box-container").show();
     $(".change-file-box").show();
 
-    const customFileUpload = document.querySelectorAll(".custom-file-upload");
-    customFileUpload[3].children[1].textContent = "Change File";
+    $(".change-file-box").prepend($(".custom-file-upload").eq(1));
+    $(".custom-file-upload").eq(1).children().eq(1).text("Change File");
 
     $(".hidden-next-btn").prop("disabled", false);
 
@@ -109,6 +130,9 @@ function switchToBrowseMode() {
 
     $(".hidden-box-container").hide();
     $(".change-file-box").hide();
+
+    $(".hidden-upload-box").prepend($(".custom-file-upload").eq(1));
+    $(".custom-file-upload").eq(1).children().eq(1).text("Upload File");
 
     $(".hidden-next-btn").prop("disabled", true);
 
