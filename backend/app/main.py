@@ -1,3 +1,4 @@
+import io
 import os
 import cv2
 import numpy as np
@@ -5,17 +6,19 @@ import uvicorn
 import json
 from fastapi import FastAPI, UploadFile, HTTPException, status
 from starlette.middleware.cors import CORSMiddleware
-
-from app.core.config import BASE_DIR, KEY_DIR
+from app.core.config import BASE_DIR, OUTPUT_EMBED_DIR
 from data_hiding.rule_creating import ExtractRule, create_rule, transform_data
 from app.schema import ExtractRuleResponse
 from data_hiding.embedding import embed_data
 from data_hiding.extracting import extract_data
+import zipfile
+from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:5500"
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
 ]
 
 app.add_middleware(
@@ -24,6 +27,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 async def read_image(file: UploadFile):
@@ -32,11 +36,37 @@ async def read_image(file: UploadFile):
     image = cv2.imdecode(np_arr, cv2.IMREAD_UNCHANGED)
     return image
 
-@app.post("/image-embedding/", response_model=ExtractRuleResponse)
+def zip_file(file_paths, zip_filename):
+    zip_subdir = f"{zip_filename.split(".")[0]}"
+    zip_io = io.BytesIO()
+
+    with zipfile.ZipFile(
+        zip_io,
+        mode="w",
+        compression=zipfile.ZIP_DEFLATED,
+    ) as temp_zip:
+        for file_path in file_paths:
+            # Calculate path for file in archive
+            file_dir, file_name = os.path.split(file_path)
+            zip_path = os.path.join(zip_subdir, file_name)
+            # Add file, at correct path
+            temp_zip.write(file_path, zip_path)
+
+    return StreamingResponse(
+        iter([zip_io.getvalue()]),
+        media_type="application/x-archive-compressed",
+        headers={
+            "Content-Disposition": f"attachment; filename={zip_filename}",
+        }
+    )
+
+@app.post("/image-embedding/")
 async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     data = await read_image(data_file)
     transformed_data = transform_data(data)
     embed_rule, extract_rule = create_rule(transformed_data)
+
+    file_paths = []
 
     extract_rule_dict = {
         "data_length": extract_rule.data_length,
@@ -45,23 +75,28 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     }
 
     extract_rule_json = json.dumps(extract_rule_dict, indent=4)
-    extract_rule_path = os.path.join(KEY_DIR, f"{data_file.filename.split(".")[0]}_extract_rule.json")
+    extract_rule_path = os.path.join(OUTPUT_EMBED_DIR, f"rules/{data_file.filename.split(".")[0]}_extract_rule.json")
     with open(extract_rule_path, "w") as f:
         f.write(extract_rule_json)
+
+    file_paths.append(extract_rule_path)
 
     for image_file in image_files:
         image = await read_image(image_file)
 
         image1, image2 = embed_data(image, transformed_data, embed_rule)
 
-        file_name = image_file.filename.split(".")
-        image1_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_1.{file_name[1]}")
-        image2_path = os.path.join(BASE_DIR, f"img/output_images/{file_name[0]}_embedded_2.{file_name[1]}")
+        image_name = image_file.filename.split(".")
+        image1_path = os.path.join(OUTPUT_EMBED_DIR, f"images/{image_name[0]}_embedded_1.{image_name[1]}")
+        image2_path = os.path.join(OUTPUT_EMBED_DIR, f"images/{image_name[0]}_embedded_2.{image_name[1]}")
 
         cv2.imwrite(image1_path, image1)
         cv2.imwrite(image2_path, image2)
 
-    return extract_rule
+        file_paths.append(image1_path)
+        file_paths.append(image2_path)
+
+    return zip_file(file_paths, f"{data_file.filename.split(".")[0]}.zip")
 
 @app.post("/image-extracting/")
 async def extract_image(
@@ -98,8 +133,8 @@ async def extract_image(
     print(extract_rule.extract_rule_max)
 
     restored_image, restored_data = extract_data(image1, image2, extract_rule)
-    restored_image_path = os.path.join(BASE_DIR, f"img/output_images/restored_image.{file_name_1[1]}")
-    restored_data_path = os.path.join(BASE_DIR, f"img/output_data/extracted_data.{file_name_1[1]}")
+    restored_image_path = os.path.join(BASE_DIR, f"files/output_extracting/restored_image.{file_name_1[1]}")
+    restored_data_path = os.path.join(BASE_DIR, f"files/output_extracting/extracted_data.{file_name_1[1]}")
 
     cv2.imwrite(restored_image_path, restored_image)
     cv2.imwrite(restored_data_path, restored_data)

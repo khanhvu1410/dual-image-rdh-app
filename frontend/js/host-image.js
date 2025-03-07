@@ -84,9 +84,9 @@ function switchToAddMode() {
     $(".host-box-container").show();
     $(".add-reset-container").show();
 
-    const customFileUpload = document.querySelectorAll(".custom-file-upload");
-    customFileUpload[1].children[0].setAttribute("src", "resources/css/icons/add.svg");
-    customFileUpload[1].children[1].textContent = "Add Files";
+    $(".add-reset-box").prepend($(".custom-file-upload").eq(0));
+    $(".custom-file-upload").eq(0).children().eq(0).attr("src", "resources/css/icons/add.svg");
+    $(".custom-file-upload").eq(0).children().eq(1).text("Add Files");
     
     $(".host-next-btn").prop("disabled", false);
 
@@ -118,6 +118,11 @@ function switchToBrowseMode() {
 
     $(".host-box-container").hide();
     $(".add-reset-container").hide();
+
+    $(".host-upload-box").prepend($(".custom-file-upload").eq(0));
+
+    $(".custom-file-upload").eq(0).children().eq(0).attr("src", "resources/css/icons/file.svg");
+    $(".custom-file-upload").eq(0).children().eq(1).text("Upload Files");
 
     $(".host-next-btn").prop("disabled", true);
 
