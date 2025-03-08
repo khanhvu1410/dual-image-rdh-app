@@ -23,10 +23,19 @@ export function shortenName(name, maxLength) {
     return fileName;
 }
 
-export const isFileEqual = async (file1, file2) => {
+const isFileEqual = async (file1, file2) => {
     return new Promise((resolve) => {
         blobCompare.default.isEqual(file1, file2)
             .then(result => resolve(result))
             .catch(() => resolve(false));
     });
 };
+
+export async function checkFileExist(file, fileList) {
+    for (let f of fileList) {
+        if (await isFileEqual(file, f)) {
+            return true;
+        }
+    }
+    return false;
+}

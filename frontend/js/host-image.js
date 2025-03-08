@@ -1,4 +1,4 @@
-import { formatBytes, shortenName, isFileEqual } from "./file-utils.js";
+import { formatBytes, shortenName, checkFileExist } from "./file-utils.js";
 
 const hostUploadInput = document.querySelector("#host-image-upload");
 
@@ -41,19 +41,10 @@ export function removeFile(index)
     renderFiles();
 }
 
-async function checkFileExist(file) {
-    for (let f of hostImageList.files) {
-        if (await isFileEqual(file, f)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 export function handleBrowseHostImage() {
-    hostUploadInput.onchange = async function() {
-        for (let file of hostUploadInput.files) {
-            if (!await checkFileExist(file)) {
+    hostUploadInput.onchange = async function(e) {
+        for (let file of e.target.files) {
+            if (!await checkFileExist(file, hostImageList.files)) {
                 hostImageList.items.add(file);
             }
         }
@@ -82,9 +73,9 @@ function switchToAddMode() {
     $(".host-upload-box").hide();
 
     $(".host-box-container").show();
-    $(".add-reset-container").show();
+    $(".add-reset-container").eq(0).show();
 
-    $(".add-reset-box").prepend($(".custom-file-upload").eq(0));
+    $(".add-reset-box").eq(0).prepend($(".custom-file-upload").eq(0));
     $(".custom-file-upload").eq(0).children().eq(0).attr("src", "resources/css/icons/add.svg");
     $(".custom-file-upload").eq(0).children().eq(1).text("Add Files");
     
@@ -117,7 +108,7 @@ function switchToBrowseMode() {
     $(".host-upload-box").show();
 
     $(".host-box-container").hide();
-    $(".add-reset-container").hide();
+    $(".add-reset-container").eq(0).hide();
 
     $(".host-upload-box").prepend($(".custom-file-upload").eq(0));
 

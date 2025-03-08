@@ -1,4 +1,5 @@
-import { downloadUrl } from "./hidden-image.js";
+import { hidingDownloadUrl } from "./hidden-image.js";
+import { restoringDownloadUrl } from "./extracting-rule.js";
 
 export function handleDownloadZipFile() {
     $(".back-btn").eq(1).on("click", function() {
@@ -9,9 +10,23 @@ export function handleDownloadZipFile() {
         $(".number-box").eq(2).css("background-color", "rgb(150, 150, 150)");
     });
 
-    $(".download-btn").on("click", function() {
+    $(".download-btn").eq(0).on("click", function() {
         setTimeout(function() {
-            URL.revokeObjectURL(downloadUrl);
+            URL.revokeObjectURL(hidingDownloadUrl);
+        }, 100);
+    });
+
+    $(".back-btn").eq(3).on("click", function() {
+        $(".slide-box").eq(4).slideDown();
+        $(".slide-box").eq(5).slideUp();
+
+        $(".number-box").eq(4).css("background-color", "rgb(84, 84, 84)");
+        $(".number-box").eq(5).css("background-color", "rgb(150, 150, 150)");
+    }); 
+
+    $(".download-btn").eq(1).on("click", function() {
+        setTimeout(function() {
+            URL.revokeObjectURL(restoringDownloadUrl);
         }, 100);
     });
 }

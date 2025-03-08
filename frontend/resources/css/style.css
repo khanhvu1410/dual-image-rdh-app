@@ -102,7 +102,7 @@ main {
     padding: 8px;
 }
 
-.embedding-box, .extracting-box {   
+.hiding-box, .restoring-box {   
     flex: 0.5;
     display: flex;
     align-items: center;
@@ -111,7 +111,7 @@ main {
     cursor: pointer;
 }
 
-.embedding-box {
+.hiding-box {
     background-color: rgb(255, 255, 255);
     border-radius: 8px;
     box-shadow: 2px 2px rgba(224, 224, 224, 0.2);
@@ -154,7 +154,7 @@ main {
     border-left: 1px solid rgb(190, 190, 190);
 }
 
-.browse-host-box, .browse-hidden-box {
+.browse-host-box, .browse-hidden-box, .browse-embedded-box, .browse-rule-box {
     border: solid 5px rgb(240, 240, 240);
     border-style: dashed;
     border-radius: 10px;
@@ -166,7 +166,7 @@ main {
     margin-bottom: 18px;
 }
 
-.description-box, .host-upload-box, .hidden-upload-box {
+.description-box, .host-upload-box, .hidden-upload-box, .embedded-upload-box, .rule-upload-box {
     flex: 0.5;
     display: flex;
     align-items: center;
@@ -182,7 +182,7 @@ input[type="file"] {
     display: none;
 }
 
-.custom-file-upload, .reset-host-box {
+.custom-file-upload, .reset-host-box, .reset-embedded-box {
     font-size: 15px;
     padding: 10px 14px;
     border-radius: 6px;
@@ -204,14 +204,14 @@ input[type="file"] {
     background-color: rgb(222, 222, 222);
 }
 
-.host-box-container, .hidden-box-container {
+.host-box-container, .hidden-box-container, .embedded-box-container, .rule-box-container {
     flex: 0.6;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.host-image-box, .hidden-image-box {
+.host-image-box, .hidden-image-box, .embedded-image-box, .rule-box {
     height: 70px;
     width: 110px;
     background-color: rgb(240, 240, 240);
@@ -221,23 +221,23 @@ input[type="file"] {
     margin-right: 8px;
 }
 
-.hidden-image-box {
+.hidden-image-box, .rule-box {
     width: 230px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.host-image-box p, .hidden-image-box p {
+.host-image-box p, .hidden-image-box p, .embedded-image-box p, .rule-box p {
     margin: 0;
     font-size: 14px;
 }
 
-.host-image-box p:first-child, .hidden-image-box p:first-child {
+.host-image-box p:first-child, .hidden-image-box p:first-child, .embedded-image-box p:first-child, .rule-box p:first-child {
     margin-bottom: 5px;
 }
 
-.delete-host-box, .delete-hidden-box {
+.delete-host-box, .delete-hidden-box, .delete-embedded-box {
     padding: 12px;
     border-radius: 30px;
     display: flex;
@@ -248,7 +248,7 @@ input[type="file"] {
     right: 0;
 }
 
-.delete-host-box:hover, .delete-hidden-box:hover {
+.delete-host-box:hover, .delete-hidden-box:hover, .delete-embedded-box:hover {
     cursor: pointer;
     background-color: rgb(230, 230, 230);
 }
@@ -277,17 +277,17 @@ input[type="file"] {
     display: flex;
 }
 
-.reset-host-box {
+.reset-host-box, .reset-embedded-box {
     background-color: rgb(253, 236, 234);
     color: rgb(97, 26, 21);
 }
 
-.reset-host-box:hover {
+.reset-host-box:hover, .reset-embedded-box:hover {
     cursor: pointer;
     background-color: rgb(253, 219, 214);
 }
 
-.host-image-number {
+.host-image-number, .embedded-image-number {
     color: rgb(13, 60, 97);
     font-size: 14px;
 }
@@ -302,18 +302,18 @@ input[type="file"] {
     background-color: rgb(235, 235, 235);
 }
 
-.hidden-next-btn, .download-btn {
+.hidden-next-btn, .download-btn, .rule-next-btn {
     flex: 0.875;
 }
 
-.host-next-btn, .hidden-next-btn, .back-btn, .download-btn {
+.host-next-btn, .hidden-next-btn, .back-btn, .download-btn, .embedded-next-btn, .rule-next-btn {
     padding: 10px 0 10px 0;
     width: 100%;
     border: none;
     border-radius: 6px;
 }
 
-.host-next-btn, .hidden-next-btn, .download-btn {
+.host-next-btn, .hidden-next-btn, .download-btn, .embedded-next-btn, .rule-next-btn {
     background-color: rgb(230, 230, 230);
     color: rgb(135, 135, 135);
 }

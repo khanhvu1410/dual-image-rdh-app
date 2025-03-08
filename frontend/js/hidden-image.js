@@ -5,7 +5,7 @@ const hiddenUploadInput = document.querySelector("#hidden-image-upload");
 
 let hiddenImageList = new DataTransfer();
 
-export let downloadUrl;
+export let hidingDownloadUrl;
 
 function renderFile(file) {
     const html = `
@@ -41,14 +41,14 @@ function embedImage(formData) {
             return response.blob();
         })
         .then(blob => {
-            downloadUrl = URL.createObjectURL(blob);
+            hidingDownloadUrl = URL.createObjectURL(blob);
             
-            $(".download-btn").attr({
-                "href": `${downloadUrl}`,
+            $(".download-btn").eq(0).attr({
+                "href": `${hidingDownloadUrl}`,
                 "download": `${zipFileName}`
             });
 
-            $(".zip-file-name").text(`${zipFileName}`);
+            $(".zip-file-name").eq(0).text(`${zipFileName}`);
         })
         .catch(error => {
             alert(error);
@@ -56,10 +56,10 @@ function embedImage(formData) {
 }
 
 export function handleBrowseHiddenImage() {
-    hiddenUploadInput.onchange = function() {
+    hiddenUploadInput.onchange = function(e) {
         switchToChangeMode();
         hiddenImageList.items.clear();
-        hiddenImageList.items.add(hiddenUploadInput.files[0]);
+        hiddenImageList.items.add(e.target.files[0]);
         renderFile(hiddenUploadInput.files[0]);
     };
 
@@ -95,9 +95,9 @@ function switchToChangeMode() {
     $(".hidden-upload-box").hide();
 
     $(".hidden-box-container").show();
-    $(".change-file-box").show();
+    $(".change-file-box").eq(0).show();
 
-    $(".change-file-box").prepend($(".custom-file-upload").eq(1));
+    $(".change-file-box").eq(0).prepend($(".custom-file-upload").eq(1));
     $(".custom-file-upload").eq(1).children().eq(1).text("Change File");
 
     $(".hidden-next-btn").prop("disabled", false);
@@ -129,7 +129,7 @@ function switchToBrowseMode() {
     $(".hidden-upload-box").show();
 
     $(".hidden-box-container").hide();
-    $(".change-file-box").hide();
+    $(".change-file-box").eq(0).hide();
 
     $(".hidden-upload-box").prepend($(".custom-file-upload").eq(1));
     $(".custom-file-upload").eq(1).children().eq(1).text("Upload File");

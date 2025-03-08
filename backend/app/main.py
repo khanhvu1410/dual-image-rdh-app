@@ -6,7 +6,7 @@ import uvicorn
 import json
 from fastapi import FastAPI, UploadFile, HTTPException, status
 from starlette.middleware.cors import CORSMiddleware
-from app.core.config import BASE_DIR, OUTPUT_EMBED_DIR
+from app.core.config import OUTPUT_EMBED_DIR, OUTPUT_EXTRACT_DIR
 from data_hiding.rule_creating import ExtractRule, create_rule, transform_data
 from app.schema import ExtractRuleResponse
 from data_hiding.embedding import embed_data
@@ -96,7 +96,7 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
         file_paths.append(image1_path)
         file_paths.append(image2_path)
 
-    return zip_file(file_paths, f"{data_file.filename.split(".")[0]}.zip")
+    return zip_file(file_paths, f"{data_file.filename.split(".")[0]}_embed.zip")
 
 @app.post("/image-extracting/")
 async def extract_image(
@@ -118,30 +118,28 @@ async def extract_image(
 
     extract_rule_dict = json.load(extract_rule_file.file)
 
+    min_keys = extract_rule_dict["extract_rule_min"].keys()
+    min_keys = list(map(lambda key: int(key), min_keys))
+    min_values = extract_rule_dict["extract_rule_min"].values()
+    extract_rule_dict["extract_rule_min"] = dict(zip(min_keys, min_values))
+
+    max_keys = extract_rule_dict["extract_rule_max"].keys()
+    max_keys = list(map(lambda key: int(key), max_keys))
+    max_values = extract_rule_dict["extract_rule_max"].values()
+    extract_rule_dict["extract_rule_max"] = dict(zip(max_keys, max_values))
+
     extract_rule = ExtractRule(**extract_rule_dict)
 
-    min_keys = extract_rule.extract_rule_min.keys()
-    min_keys = list(map(lambda key: int(key), min_keys))
-    min_values = extract_rule.extract_rule_min.values()
-    extract_rule.extract_rule_min = dict(zip(min_keys, min_values))
-    print(extract_rule.extract_rule_min)
-
-    max_keys = extract_rule.extract_rule_max.keys()
-    max_keys = list(map(lambda key: int(key), max_keys))
-    max_values = extract_rule.extract_rule_max.values()
-    extract_rule.extract_rule_max = dict(zip(max_keys, max_values))
-    print(extract_rule.extract_rule_max)
-
     restored_image, restored_data = extract_data(image1, image2, extract_rule)
-    restored_image_path = os.path.join(BASE_DIR, f"files/output_extracting/restored_image.{file_name_1[1]}")
-    restored_data_path = os.path.join(BASE_DIR, f"files/output_extracting/extracted_data.{file_name_1[1]}")
+    restored_image_path = os.path.join(OUTPUT_EXTRACT_DIR, f"images/restored_host_image.{file_name_1[1]}")
+    restored_data_path = os.path.join(OUTPUT_EXTRACT_DIR, f"images/extracted_hidden_image.{file_name_1[1]}")
 
     cv2.imwrite(restored_image_path, restored_image)
     cv2.imwrite(restored_data_path, restored_data)
 
-    return {
-        "message": "Image extracted successfully",
-    }
+    file_paths = [restored_image_path, restored_data_path]
+
+    return zip_file(file_paths, "restored_images.zip")
 
 @app.get("/")
 async def root():
