@@ -36,10 +36,10 @@
         
         <div class="option-container">
             <div class="option-box">
-                <div class="embedding-box">
+                <div class="hiding-box">
                     Hiding
                 </div>
-                <div class="extracting-box">
+                <div class="restoring-box">
                     Restoring
                 </div>
             </div>
@@ -126,6 +126,109 @@
                 <div class="label-box">
                     <div class="number-box">3</div>
                     <p class="step-label">Download embedded images & Key</p>
+                </div>
+                
+                <div class="border-box">
+                    <div class="slide-box">
+                        <div class="zip-file-box">
+                            <img class="lock-icon" src="resources/css/icons/lock.svg" alt="lock-icon">
+                            <p><span class="zip-file-name"></span> was loaded successfully and ready to download</p>
+                        </div>
+                        <div class="next-btn-box">
+                            <button type="button" class="back-btn">
+                                BACK
+                            </button>
+                            
+                            <a class="download-btn">
+                                DOWNLOAD
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-container">
+            <div class="step-box">
+                <div class="label-box">
+                    <div class="number-box">1</div>
+                    <p class="step-label">Choose 2 embedded images</p>
+                </div>
+
+                <div class="border-box">
+                    <div class="slide-box">
+                        <div class="browse-embedded-box">
+                            <div class="description-box">
+                                Drag & Drop or Browse Files
+                            </div>
+                            <div class="embedded-upload-box">
+                                <label for="embedded-image-upload" class="custom-file-upload">
+                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
+                                    <p>Browse Files</p>
+                                </label>
+                                <input id="embedded-image-upload" type="file" accept="image/*" multiple />                                            
+                            </div>
+                            <div class="embedded-box-container"></div>
+                            <div class="add-reset-container">
+                                <div class="add-reset-box">
+                                    <div class="reset-embedded-box">
+                                        <img class="reset-icon" src="resources/css/icons/reset.svg" alt="reset-icon">
+                                        Reset
+                                    </div>
+                                </div>
+                                <div class="embedded-image-number"></div>
+                            </div>
+                        </div>
+    
+                        <div class="next-btn-box">
+                            <button type="button" class="embedded-next-btn">
+                                NEXT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="label-box">
+                    <div class="number-box">2</div>
+                    <p class="step-label">Choose the extracting rule</p>
+                </div>
+                
+                <div class="border-box">
+                    <div class="slide-box">
+                        <div class="browse-rule-box">
+                            <div class="description-box">
+                                Drag & Drop or Browse File
+                            </div>
+                            <div class="rule-upload-box">
+                                <label for="rule-upload" class="custom-file-upload">
+                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
+                                    <p>Browse File</p>
+                                </label>
+                                <input id="rule-upload" type="file" accept=".json" />                                            
+                            </div>
+                            <div class="rule-box-container"></div>
+                            <div class="change-file-box"></div>
+                        </div>
+    
+                        <div class="next-btn-box">
+                            <button type="button" class="back-btn">
+                                BACK
+                            </button>
+                            
+                            <button type="button" class="rule-next-btn">
+                                NEXT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <div class="label-box">
+                    <div class="number-box">3</div>
+                    <p class="step-label">Download restored host image & Extracted hidden image</p>
                 </div>
                 
                 <div class="border-box">
