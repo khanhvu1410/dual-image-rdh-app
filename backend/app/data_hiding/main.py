@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
-from data_hiding.embedding import embed_data
-from data_hiding.extracting import extract_data
-from data_hiding.rule_creating import create_rule, transform_data
+from app.data_hiding.embedding import embed_data
+from app.data_hiding.extracting import extract_data
+from app.data_hiding.rule_creating import create_rule, transform_data
 
 
 def display_result(image: str, data: str):

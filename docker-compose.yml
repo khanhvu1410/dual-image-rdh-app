@@ -1,0 +1,14 @@
+services:
+  backend:
+    container_name: rdh-fastapi-container
+    build: 
+      context: ./backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    container_name: rdh-static-container
+    build: 
+      context: ./frontend
+    ports:
+      - "800:80"

@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from data_hiding.rule_creating import check_pixels, ExtractRule
+from app.data_hiding.rule_creating import check_pixels, ExtractRule
 
 def extract_bits(
     x11: int, x12: int, x21: int, x22: int,

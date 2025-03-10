@@ -1,5 +1,6 @@
 import numpy as np
-from data_hiding.rule_creating import check_pixels, transform_data, create_rule
+from app.data_hiding.rule_creating import check_pixels
+
 
 def embed_bits(x1: int, x2: int, bits: str, embed_rule: dict):
     sort = False
