@@ -7,18 +7,17 @@ import json
 from fastapi import FastAPI, UploadFile, HTTPException, status
 from starlette.middleware.cors import CORSMiddleware
 from app.core.config import OUTPUT_EMBED_DIR, OUTPUT_EXTRACT_DIR
-from data_hiding.rule_creating import ExtractRule, create_rule, transform_data
-from app.schema import ExtractRuleResponse
-from data_hiding.embedding import embed_data
-from data_hiding.extracting import extract_data
+from app.data_hiding.embedding import embed_data
+from app.data_hiding.extracting import extract_data
+from app.data_hiding.rule_creating import transform_data, create_rule, ExtractRule
 import zipfile
 from fastapi.responses import StreamingResponse
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
+    "http://localhost:800",
+    "https://rdh-dual-images.onrender.com",
 ]
 
 app.add_middleware(
@@ -51,6 +50,8 @@ def zip_file(file_paths, zip_filename):
             zip_path = os.path.join(zip_subdir, file_name)
             # Add file, at correct path
             temp_zip.write(file_path, zip_path)
+            # Remove file after adding to archive
+            os.remove(file_path)
 
     return StreamingResponse(
         iter([zip_io.getvalue()]),
@@ -75,7 +76,7 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     }
 
     extract_rule_json = json.dumps(extract_rule_dict, indent=4)
-    extract_rule_path = os.path.join(OUTPUT_EMBED_DIR, f"rules/{data_file.filename.split(".")[0]}_extract_rule.json")
+    extract_rule_path = os.path.join(OUTPUT_EMBED_DIR, f"{data_file.filename.split(".")[0]}_extract_rule.json")
     with open(extract_rule_path, "w") as f:
         f.write(extract_rule_json)
 
@@ -87,8 +88,8 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
         image1, image2 = embed_data(image, transformed_data, embed_rule)
 
         image_name = image_file.filename.split(".")
-        image1_path = os.path.join(OUTPUT_EMBED_DIR, f"images/{image_name[0]}_embedded_1.{image_name[1]}")
-        image2_path = os.path.join(OUTPUT_EMBED_DIR, f"images/{image_name[0]}_embedded_2.{image_name[1]}")
+        image1_path = os.path.join(OUTPUT_EMBED_DIR, f"{image_name[0]}_embedded_1.{image_name[1]}")
+        image2_path = os.path.join(OUTPUT_EMBED_DIR, f"{image_name[0]}_embedded_2.{image_name[1]}")
 
         cv2.imwrite(image1_path, image1)
         cv2.imwrite(image2_path, image2)
@@ -131,8 +132,8 @@ async def extract_image(
     extract_rule = ExtractRule(**extract_rule_dict)
 
     restored_image, restored_data = extract_data(image1, image2, extract_rule)
-    restored_image_path = os.path.join(OUTPUT_EXTRACT_DIR, f"images/restored_host_image.{file_name_1[1]}")
-    restored_data_path = os.path.join(OUTPUT_EXTRACT_DIR, f"images/extracted_hidden_image.{file_name_1[1]}")
+    restored_image_path = os.path.join(OUTPUT_EXTRACT_DIR, f"restored_host_image.{file_name_1[1]}")
+    restored_data_path = os.path.join(OUTPUT_EXTRACT_DIR, f"extracted_hidden_image.{file_name_1[1]}")
 
     cv2.imwrite(restored_image_path, restored_image)
     cv2.imwrite(restored_data_path, restored_data)
