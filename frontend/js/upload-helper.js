@@ -1,7 +1,4 @@
-import {
-    formatBytes,
-    shortenName
-} from "./file-utils.js";
+import { formatBytes, shortenName } from "./file-utils.js";
 
 export function renderFiles(files, fileBox, deleteBox, moduleName, boxContainer, fileNumber) {
     let maxLength = 11;

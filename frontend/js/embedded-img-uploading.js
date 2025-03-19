@@ -1,6 +1,4 @@
-import { 
-    checkFileExist
-} from "./file-utils.js";
+import { checkFileExist } from "./file-utils.js";
 
 import {
     switchToAddMode, 
