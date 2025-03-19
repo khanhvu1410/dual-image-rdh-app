@@ -7,11 +7,10 @@ import json
 from fastapi import FastAPI, UploadFile, HTTPException, status
 from starlette.middleware.cors import CORSMiddleware
 from app.core.config import OUTPUT_EMBED_DIR, OUTPUT_EXTRACT_DIR
-from app.data_hiding.embedding import embed_data
-from app.data_hiding.extracting import extract_data
-from app.data_hiding.rule_creating import transform_data, create_rule, ExtractRule
 import zipfile
 from fastapi.responses import StreamingResponse
+from app.rdh.embedder import Embedder
+from app.rdh.extractor import Extractor
 
 app = FastAPI()
 
@@ -65,15 +64,14 @@ def zip_file(file_paths, zip_filename):
 @app.post("/image-embedding/")
 async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     data = await read_image(data_file)
-    transformed_data = transform_data(data)
-    data_length, embed_rule, extract_rule = create_rule(transformed_data)
+    embedder = Embedder(data)
 
     file_paths = []
 
     extract_rule_dict = {
-        "data_length": data_length,
-        "extract_rule_min": extract_rule.extract_rule_min,
-        "extract_rule_max": extract_rule.extract_rule_max,
+        "data_length": embedder.data_length,
+        "extract_rule_min": embedder.extract_rule_min,
+        "extract_rule_max": embedder.extract_rule_max,
     }
 
     extract_rule_json = json.dumps(extract_rule_dict, indent=4)
@@ -86,7 +84,7 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     for image_file in image_files:
         image = await read_image(image_file)
 
-        image1, image2 = embed_data(image, transformed_data, data_length, embed_rule)
+        image1, image2 = embedder.embed_data(image)
 
         image_name = image_file.filename.split(".")
         image1_path = os.path.join(OUTPUT_EMBED_DIR, f"{image_name[0]}_embedded_1.{image_name[1]}")
@@ -132,9 +130,8 @@ async def extract_image(
     max_values = key_dict["extract_rule_max"].values()
     extract_rule_max = dict(zip(max_keys, max_values))
 
-    extract_rule = ExtractRule(extract_rule_min, extract_rule_max)
-
-    restored_image, restored_data = extract_data(image1, image2, data_length, extract_rule)
+    extractor = Extractor(image1, image2, data_length, extract_rule_min, extract_rule_max)
+    restored_image, restored_data = extractor.extract_data()
     restored_image_path = os.path.join(OUTPUT_EXTRACT_DIR, f"restored_host_image.{file_name_1[1]}")
     restored_data_path = os.path.join(OUTPUT_EXTRACT_DIR, f"extracted_hidden_image.{file_name_1[1]}")
 

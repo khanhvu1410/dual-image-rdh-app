@@ -31,7 +31,7 @@ export function removeFile(index, id) {
 function embedImage(formData, callback) {
     let zipFileName = "";
 
-    fetch("https://rdh-fastapi-app.onrender.com/image-embedding/", {
+    fetch("http://localhost:8000/image-embedding/", {
         method: "POST",
         body: formData
     })

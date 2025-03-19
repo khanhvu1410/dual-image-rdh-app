@@ -31,7 +31,7 @@ export function removeFile(index, id) {
 function extractImage(formData, callback) {
     let zipFileName = "";
 
-    fetch("https://rdh-fastapi-app.onrender.com/image-extracting/", {
+    fetch("http://localhost:8000/image-extracting/", {
         method: "POST",
         body: formData
     })
