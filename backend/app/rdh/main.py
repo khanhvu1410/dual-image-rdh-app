@@ -1,36 +1,33 @@
 import cv2
 import numpy as np
-from app.data_hiding.embedding import embed_data
-from app.data_hiding.extracting import extract_data
-from app.data_hiding.rule_creating import transform_data, create_rule
+from app.rdh.embedder import Embedder
+from app.rdh.extractor import Extractor
 
-def display_result(image: str, data: str):
-    img = cv2.imread(image, cv2.IMREAD_UNCHANGED)
-    d = cv2.imread(data, cv2.IMREAD_UNCHANGED)
+def display_result(image: np.ndarray, data: np.ndarray):
+    embedder = Embedder(data)
+    embedder.print_rules()
 
-    td = transform_data(d)
-    data_length, embed_rule, extract_rule = create_rule(td)
-    print("Embedding rule: ")
-    print(embed_rule)
-    print("Extracting rule min: ")
-    print(extract_rule.extract_rule_min)
-    print("Extracting rule max: ")
-    print(extract_rule.extract_rule_max)
-
-    image1, image2 = embed_data(img, td, data_length, embed_rule)
+    image1, image2 = embedder.embed_data(image)
     print("Image 1: ")
     print(image1)
     print("Image 2: ")
     print(image2)
 
-    restored_image, extracted_data = extract_data(image1, image2, data_length, extract_rule)
+    extractor = Extractor(
+        image1,
+        image2,
+        embedder.data_length,
+        embedder.extract_rule_min,
+        embedder.extract_rule_max
+    )
+    restored_image, extracted_data = extractor.extract_data()
     print("Restored image: ")
     print(restored_image)
     print("Restored data: ")
     print(extracted_data)
 
-    h_image = np.hstack((img, restored_image))
-    h_data = np.hstack((d, extracted_data))
+    h_image = np.hstack((image, restored_image))
+    h_data = np.hstack((data, extracted_data))
 
     cv2.imshow("Input image and restored image", h_image)
     cv2.imshow("Input data and extracted data", h_data)
@@ -53,6 +50,6 @@ if __name__ == "__main__":
     #     [1, 1, 0, 0, 1, 1, 1, 0]
     # ])
 
-    input_img = "test_images/7.bmp"
-    hidden_img = "test_images/utc_logo_460_460.bmp"
+    input_img = cv2.imread("test_images/7.bmp", cv2.IMREAD_UNCHANGED)
+    hidden_img = cv2.imread("test_images/utc_logo_460_460.bmp", cv2.IMREAD_UNCHANGED)
     display_result(input_img, hidden_img)

@@ -1,6 +1,6 @@
 import { hidingDownloadUrl } from "./hidden-img-uploading.js";
 import { restoringDownloadUrl } from "./key-uploading.js";
-import { switchActiveStep } from "./upload-helper.js";
+import { switchActiveStep, disableButton } from "./upload-helper.js";
 
 function handleBackBtnClick(zipFileBox, downloadBtn) {
     zipFileBox.css({
