@@ -34,7 +34,7 @@ def extract_bits(
 
     return x1, x2, bits
 
-def extract_data(image1: np.ndarray, image2: np.ndarray, extract_rule: ExtractRule):
+def extract_data(image1: np.ndarray, image2: np.ndarray, data_length, extract_rule: ExtractRule):
     img1 = np.int32(image1)
     img2 = np.int32(image2)
 
@@ -45,7 +45,7 @@ def extract_data(image1: np.ndarray, image2: np.ndarray, extract_rule: ExtractRu
 
     for i in range(m):
         for j in range(0, n-1, 2):
-            if count >= extract_rule.data_length:
+            if count >= data_length:
                 break
 
             if (

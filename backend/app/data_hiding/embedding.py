@@ -1,7 +1,6 @@
 import numpy as np
 from app.data_hiding.rule_creating import check_pixels
 
-
 def embed_bits(x1: int, x2: int, bits: str, embed_rule: dict):
     sort = False
     xs1 = x1
@@ -35,11 +34,9 @@ def embed_bits(x1: int, x2: int, bits: str, embed_rule: dict):
 
     return x11, x12, x21, x22
 
-def embed_data(image: np.ndarray, data: str, embed_rule: dict):
+def embed_data(image: np.ndarray, data: str, data_length, embed_rule: dict):
     img = np.int32(image)
     m, n = img.shape
-
-    data_length = len(data)
 
     img1 = img.copy()
     img2 = img.copy()

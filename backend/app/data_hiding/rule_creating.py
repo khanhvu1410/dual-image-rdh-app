@@ -1,8 +1,7 @@
 import numpy as np
 
 class ExtractRule:
-    def __init__(self, data_length, extract_rule_min, extract_rule_max):
-        self.data_length = data_length
+    def __init__(self, extract_rule_min, extract_rule_max):
         self.extract_rule_min = extract_rule_min
         self.extract_rule_max = extract_rule_max
 
@@ -49,7 +48,7 @@ def create_rule(data: str):
     extract_rule_min = dict(zip((0, 1, -1, 2), sorted_bits))
     extract_rule_max = dict(zip((0, -1, 1, -2), sorted_bits))
 
-    return embed_rule, ExtractRule(data_length, extract_rule_min, extract_rule_max)
+    return data_length, embed_rule, ExtractRule(extract_rule_min, extract_rule_max)
 
 def check_pixels(pixel1: int, pixel2: int):
     if 2 <= pixel1 <= 253 and 2 <= pixel2 <= 253:

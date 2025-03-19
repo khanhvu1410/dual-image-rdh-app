@@ -13,10 +13,7 @@ export function formatBytes(bytes, decimals = 2) {
 export function shortenName(name, maxLength) {
     let fileName = "";
     if (name.length > maxLength) {
-        for (let i = 0; i < maxLength; i++) {
-            fileName += name[i];
-        }
-        fileName += "..."; 
+        fileName = `${name.slice(0, maxLength)}...`;
     } else {
         fileName = name;
     }
@@ -32,10 +29,7 @@ const isFileEqual = async (file1, file2) => {
 };
 
 export async function checkFileExist(file, fileList) {
-    for (let f of fileList) {
-        if (await isFileEqual(file, f)) {
-            return true;
-        }
-    }
-    return false;
+    const files = Array.from(fileList);
+    const results = await Promise.all(files.map(f => isFileEqual(f, file)));
+    return results.some(result => result);
 }

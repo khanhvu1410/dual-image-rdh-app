@@ -1,13 +1,31 @@
-import { hidingDownloadUrl } from "./hidden-image.js";
-import { restoringDownloadUrl } from "./extracting-rule.js";
+import { hidingDownloadUrl } from "./hidden-img-uploading.js";
+import { restoringDownloadUrl } from "./key-uploading.js";
+import { switchActiveStep } from "./upload-helper.js";
+
+function handleBackBtnClick(zipFileBox, downloadBtn) {
+    zipFileBox.css({
+        "background-color": "rgb(253, 236, 234)",
+        "color": "rgb(97, 26, 21)"
+    });
+
+    zipFileBox.html(`
+        <div class="loader"></div>
+        <p>Loading file, please wait...</p>
+    `);
+
+    downloadBtn.addClass("disable-click");
+
+    disableButton(downloadBtn);
+}
 
 export function handleDownloadZipFile() {
     $(".back-btn").eq(1).on("click", function() {
-        $(".slide-box").eq(1).slideDown();
-        $(".slide-box").eq(2).slideUp();
+        switchActiveStep(1, 2);
 
-        $(".number-box").eq(1).css("background-color", "rgb(84, 84, 84)");
-        $(".number-box").eq(2).css("background-color", "rgb(150, 150, 150)");
+        handleBackBtnClick(
+            $(".zip-file-box").eq(0),
+            $(".download-btn").eq(0)
+        );
     });
 
     $(".download-btn").eq(0).on("click", function() {
@@ -17,11 +35,12 @@ export function handleDownloadZipFile() {
     });
 
     $(".back-btn").eq(3).on("click", function() {
-        $(".slide-box").eq(4).slideDown();
-        $(".slide-box").eq(5).slideUp();
+        switchActiveStep(4, 5);
 
-        $(".number-box").eq(4).css("background-color", "rgb(84, 84, 84)");
-        $(".number-box").eq(5).css("background-color", "rgb(150, 150, 150)");
+        handleBackBtnClick(
+            $(".zip-file-box").eq(1),
+            $(".download-btn").eq(1)
+        );
     }); 
 
     $(".download-btn").eq(1).on("click", function() {

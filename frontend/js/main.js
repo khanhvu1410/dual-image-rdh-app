@@ -1,10 +1,12 @@
-import { handleBrowseHostImage } from "./host-image.js";
-import { handleBrowseHiddenImage } from "./hidden-image.js";
+import { handleBrowseHostImage } from "./host-img-uploading.js";
+import { handleBrowseHiddenImage } from "./hidden-img-uploading.js";
 import { handleDownloadZipFile } from "./file-downloading.js";
-import { handleBrowseEmbeddedImage } from "./embedded-image.js";
-import { handleBrowseRule } from "./extracting-rule.js";
+import { handleBrowseEmbeddedImage } from "./embedded-img-uploading.js";
+import { handleBrowseKey } from "./key-uploading.js";
 
 $(function() {
+    $(".hiding-box").css("color", "rgb(63, 63, 63)");
+
     handleClickOptionBox();
 
     hidingInitialSetup();
@@ -19,7 +21,7 @@ $(function() {
 
     handleBrowseEmbeddedImage();
 
-    handleBrowseRule();
+    handleBrowseKey();
 });
 
 function handleClickOptionBox() {
@@ -29,12 +31,14 @@ function handleClickOptionBox() {
         $(this).css({
             "background-color": "rgb(255, 255, 255)",
             "border-radius": "8px",
-            "box-shadow": "2px 2px rgba(224, 224, 224, 0.2)"
+            "box-shadow": "2px 2px rgba(224, 224, 224, 0.2)",
+            "color": "rgb(63, 63, 63)"
         });
         $(".restoring-box").css({
             "background-color": "rgb(240, 240, 240)",
             "border-radius": "",
-            "box-shadow": ""
+            "box-shadow": "",
+            "color": ""
         });
     });
 
@@ -44,17 +48,21 @@ function handleClickOptionBox() {
         $(this).css({
             "background-color": "rgb(255, 255, 255)",
             "border-radius": "8px",
-            "box-shadow": "2px 2px rgba(224, 224, 224, 0.2)"
+            "box-shadow": "2px 2px rgba(224, 224, 224, 0.2)",
+            "color": "rgb(63, 63, 63)"
         });
         $(".hiding-box").css({
             "background-color": "rgb(240, 240, 240)",
             "border-radius": "",
-            "box-shadow": ""
+            "box-shadow": "",
+            "color": ""
         });
     });
 }
 
 function hidingInitialSetup() {
+    $(".step-label").eq(0).css("color", "rgb(0, 0, 0)");
+
     $(".host-next-btn").prop("disabled", true);
     $(".hidden-next-btn").prop("disabled", true);
 
@@ -73,13 +81,15 @@ function hidingInitialSetup() {
 }
 
 function restoringInitialSetup() {
+    $(".step-label").eq(3).css("color", "rgb(0, 0, 0)");
+
     $(".process-container").eq(1).hide();
 
     $(".embedded-box-container").hide();
     $(".add-reset-container").eq(1).hide();
 
     $(".slide-box").eq(4).hide();
-    $(".rule-box-container").hide();
+    $(".key-box-container").hide();
     $(".change-file-box").eq(1).hide();
 
     $(".slide-box").eq(5).hide();

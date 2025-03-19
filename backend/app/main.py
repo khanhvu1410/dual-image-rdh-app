@@ -16,6 +16,7 @@ from fastapi.responses import StreamingResponse
 app = FastAPI()
 
 origins = [
+    "http://127.0.0.1:5500",
     "http://localhost:800",
     "https://rdh-dual-images.onrender.com",
 ]
@@ -65,18 +66,18 @@ def zip_file(file_paths, zip_filename):
 async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     data = await read_image(data_file)
     transformed_data = transform_data(data)
-    embed_rule, extract_rule = create_rule(transformed_data)
+    data_length, embed_rule, extract_rule = create_rule(transformed_data)
 
     file_paths = []
 
     extract_rule_dict = {
-        "data_length": extract_rule.data_length,
+        "data_length": data_length,
         "extract_rule_min": extract_rule.extract_rule_min,
         "extract_rule_max": extract_rule.extract_rule_max,
     }
 
     extract_rule_json = json.dumps(extract_rule_dict, indent=4)
-    extract_rule_path = os.path.join(OUTPUT_EMBED_DIR, f"{data_file.filename.split(".")[0]}_extract_rule.json")
+    extract_rule_path = os.path.join(OUTPUT_EMBED_DIR, f"{data_file.filename.split(".")[0]}_key.json")
     with open(extract_rule_path, "w") as f:
         f.write(extract_rule_json)
 
@@ -85,7 +86,7 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
     for image_file in image_files:
         image = await read_image(image_file)
 
-        image1, image2 = embed_data(image, transformed_data, embed_rule)
+        image1, image2 = embed_data(image, transformed_data, data_length, embed_rule)
 
         image_name = image_file.filename.split(".")
         image1_path = os.path.join(OUTPUT_EMBED_DIR, f"{image_name[0]}_embedded_1.{image_name[1]}")
@@ -103,7 +104,7 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
 async def extract_image(
     image_file_1: UploadFile,
     image_file_2: UploadFile,
-    extract_rule_file: UploadFile
+    key_file: UploadFile
 ):
     file_name_1 = image_file_1.filename.split(".")
     file_name_2 = image_file_2.filename.split(".")
@@ -117,21 +118,23 @@ async def extract_image(
     image1 = await read_image(image_file_1)
     image2 = await read_image(image_file_2)
 
-    extract_rule_dict = json.load(extract_rule_file.file)
+    key_dict = json.load(key_file.file)
 
-    min_keys = extract_rule_dict["extract_rule_min"].keys()
+    data_length = key_dict["data_length"]
+
+    min_keys = key_dict["extract_rule_min"].keys()
     min_keys = list(map(lambda key: int(key), min_keys))
-    min_values = extract_rule_dict["extract_rule_min"].values()
-    extract_rule_dict["extract_rule_min"] = dict(zip(min_keys, min_values))
+    min_values = key_dict["extract_rule_min"].values()
+    extract_rule_min = dict(zip(min_keys, min_values))
 
-    max_keys = extract_rule_dict["extract_rule_max"].keys()
+    max_keys = key_dict["extract_rule_max"].keys()
     max_keys = list(map(lambda key: int(key), max_keys))
-    max_values = extract_rule_dict["extract_rule_max"].values()
-    extract_rule_dict["extract_rule_max"] = dict(zip(max_keys, max_values))
+    max_values = key_dict["extract_rule_max"].values()
+    extract_rule_max = dict(zip(max_keys, max_values))
 
-    extract_rule = ExtractRule(**extract_rule_dict)
+    extract_rule = ExtractRule(extract_rule_min, extract_rule_max)
 
-    restored_image, restored_data = extract_data(image1, image2, extract_rule)
+    restored_image, restored_data = extract_data(image1, image2, data_length, extract_rule)
     restored_image_path = os.path.join(OUTPUT_EXTRACT_DIR, f"restored_host_image.{file_name_1[1]}")
     restored_data_path = os.path.join(OUTPUT_EXTRACT_DIR, f"extracted_hidden_image.{file_name_1[1]}")
 
