@@ -7,34 +7,25 @@ class Embedder:
         (
             self.data_length,
             self.embed_rule,
-            self.extract_rule_min,
-            self.extract_rule_max
+            self.extract_rule
         ) = self.create_rule()
 
     def print_rules(self):
         print("Embedding rule: ")
         print(self.embed_rule)
-        print("Extracting rule min: ")
-        print(self.extract_rule_min)
-        print("Extracting rule max: ")
-        print(self.extract_rule_max)
+        print("Extracting rule: ")
+        print(self.extract_rule)
 
     def transform_data(self):
         d = self.data.copy()
         m, n = d.shape
-        m_bin = bin(m)[2:]
-        n_bin = bin(n)[2:]
-        td = ""
-        for i in range(m):
-            for j in range(n):
-                if d[i, j] == 255:
-                    d[i, j] = 1
-                td += str(d[i][j])
 
-        while len(m_bin) < 10:
-            m_bin = "0" + m_bin
-        while len(n_bin) < 10:
-            n_bin = "0" + n_bin
+        d = np.array(d / d.max(), dtype=np.uint8)
+        td = d.reshape(-1)
+        td = "".join(str(x) for x in td)
+
+        m_bin = bin(m)[2:].zfill(10)
+        n_bin = bin(n)[2:].zfill(10)
 
         self.data = m_bin + n_bin + td
 
@@ -59,10 +50,12 @@ class Embedder:
             (-1, 1, 1, -1)
         ]))
 
-        extract_rule_min = dict(zip((0, 1, -1, 2), sorted_bits))
-        extract_rule_max = dict(zip((0, -1, 1, -2), sorted_bits))
+        extract_rule = {
+            "min": dict(zip((0, 1, -1, 2), sorted_bits)),
+            "max": dict(zip((0, -1, 1, -2), sorted_bits))
+        }
 
-        return data_length, embed_rule, extract_rule_min, extract_rule_max
+        return data_length, embed_rule, extract_rule
 
     def embed_bits(self, x1: int, x2: int, bits: str):
         sort = False

@@ -17,8 +17,7 @@ def display_result(image: np.ndarray, data: np.ndarray):
         image1,
         image2,
         embedder.data_length,
-        embedder.extract_rule_min,
-        embedder.extract_rule_max
+        embedder.extract_rule
     )
     restored_image, extracted_data = extractor.extract_data()
     print("Restored image: ")
