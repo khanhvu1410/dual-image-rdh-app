@@ -70,8 +70,7 @@ async def embed_image(image_files: list[UploadFile], data_file: UploadFile):
 
     extract_rule_dict = {
         "data_length": embedder.data_length,
-        "extract_rule_min": embedder.extract_rule_min,
-        "extract_rule_max": embedder.extract_rule_max,
+        "extract_rule": embedder.extract_rule
     }
 
     extract_rule_json = json.dumps(extract_rule_dict, indent=4)
@@ -119,18 +118,19 @@ async def extract_image(
     key_dict = json.load(key_file.file)
 
     data_length = key_dict["data_length"]
+    extract_rule = key_dict["extract_rule"]
 
-    min_keys = key_dict["extract_rule_min"].keys()
+    min_keys = extract_rule["min"].keys()
     min_keys = list(map(lambda key: int(key), min_keys))
-    min_values = key_dict["extract_rule_min"].values()
-    extract_rule_min = dict(zip(min_keys, min_values))
+    min_values = extract_rule["min"].values()
+    min_dict = dict(zip(min_keys, min_values))
 
-    max_keys = key_dict["extract_rule_max"].keys()
+    max_keys = extract_rule["max"].keys()
     max_keys = list(map(lambda key: int(key), max_keys))
-    max_values = key_dict["extract_rule_max"].values()
-    extract_rule_max = dict(zip(max_keys, max_values))
+    max_values = extract_rule["max"].values()
+    max_dict = dict(zip(max_keys, max_values))
 
-    extractor = Extractor(image1, image2, data_length, extract_rule_min, extract_rule_max)
+    extractor = Extractor(image1, image2, data_length, {"min": min_dict, "max": max_dict})
     restored_image, restored_data = extractor.extract_data()
     restored_image_path = os.path.join(OUTPUT_EXTRACT_DIR, f"restored_host_image.{file_name_1[1]}")
     restored_data_path = os.path.join(OUTPUT_EXTRACT_DIR, f"extracted_hidden_image.{file_name_1[1]}")

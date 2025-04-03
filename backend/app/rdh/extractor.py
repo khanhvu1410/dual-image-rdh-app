@@ -2,12 +2,11 @@ import math
 import numpy as np
 
 class Extractor:
-    def __init__(self, image1, image2, data_length, extract_rule_min, extract_rule_max):
+    def __init__(self, image1, image2, data_length, extract_rule):
         self.image1 = image1
         self.image2 = image2
         self.data_length = data_length
-        self.extract_rule_min = extract_rule_min
-        self.extract_rule_max = extract_rule_max
+        self.extract_rule = extract_rule
 
     def extract_bits(self, x11: int, x12: int, x21: int, x22: int):
         xs11 = x11
@@ -32,8 +31,8 @@ class Extractor:
             x1 = xs2
             x2 = xs1
 
-        b1b2 = self.extract_rule_min[xs21 - xs11]
-        b2b3 = self.extract_rule_max[xs22 - xs12]
+        b1b2 = self.extract_rule["min"][xs21 - xs11]
+        b2b3 = self.extract_rule["max"][xs22 - xs12]
         bits = b1b2 + b2b3
 
         return x1, x2, bits
