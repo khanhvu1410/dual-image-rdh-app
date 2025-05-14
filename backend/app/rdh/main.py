@@ -49,6 +49,6 @@ if __name__ == "__main__":
     #     [1, 1, 0, 0, 1, 1, 1, 0]
     # ])
 
-    input_img = cv2.imread("test_images/7.bmp", cv2.IMREAD_UNCHANGED)
-    hidden_img = cv2.imread("test_images/utc_logo_460_460.bmp", cv2.IMREAD_UNCHANGED)
+    input_img = cv2.imread("images/5.bmp", cv2.IMREAD_UNCHANGED)
+    hidden_img = cv2.imread("images/utc_logo_440_440.bmp", cv2.IMREAD_UNCHANGED)
     display_result(input_img, hidden_img)
