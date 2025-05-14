@@ -1,264 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reversible Data Hiding in Dual Images – Secure & Lossless Information Embedding</title>
-    <link rel="icon" type="image/x-icon" href="images/logo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="resources/css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Dual-image Reversible Data Hiding – Secure & Lossless Information
+      Embedding
+    </title>
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
     <header>
-        <div class="left-section">
-            <img class="logo" src="images/logo.png">
-            <div class="version-box">
-                v.0.1.0
-            </div> 
+      <div class="left-section">
+        <img class="logo" src="assets/images/logo.png" />
+        <div class="version-box">v.0.1.0</div>
+      </div>
+      <div class="right-section">
+        <div class="about-box">About</div>
+        <div class="github-icon-box">
+          <img class="github-icon" src="assets/icons/github.svg" />
         </div>
-        <div class="right-section">
-            <div class="about-box">
-                About
-            </div>
-            <div class="github-icon-box">
-                <img class="github-icon" src="resources/css/icons/github.svg">
-            </div>
-            <div class="setting-icon-box">
-                <img class="setting-icon" src="resources/css/icons/setting.svg"> 
-            </div>
-        </div>        
+        <div class="setting-icon-box">
+          <img class="setting-icon" src="assets/icons/setting.svg" />
+        </div>
+      </div>
     </header>
-    
+
     <main>
-        <h2>Reversible Data Hiding in Dual Images</h2>
-        <p class="sub-title">Easily hide and retrieve images securely with our reversible data hiding technique</p>
-        
-        <div class="option-container">
-            <div class="option-box">
-                <div class="hiding-box">
-                    Hiding
-                </div>
-                <div class="restoring-box">
-                    Restoring
-                </div>
-            </div>
+      <h2>Dual-image Reversible Data Hiding</h2>
+      <p class="sub-title">
+        Easily hide and retrieve images securely with our reversible data hiding
+        technique
+      </p>
+
+      <div class="option-container">
+        <div class="option-box">
+          <div class="hiding-box">Hiding</div>
+          <div class="restoring-box">Restoring</div>
         </div>
-        
-        <div class="process-container">
-            <div class="step-box">
-                <div class="label-box">
-                    <div class="number-box">1</div>
-                    <p class="step-label">Choose host images</p>
+      </div>
+
+      <div class="process-container">
+        <div class="step-box">
+          <div class="label-box">
+            <div class="number-box">1</div>
+            <p class="step-label">Choose host images</p>
+          </div>
+
+          <div class="border-box">
+            <div class="slide-box">
+              <div class="browse-host-box">
+                <div class="description-box">Drag & Drop or Browse Files</div>
+                <div class="host-upload-box">
+                  <label for="host-image-upload" class="custom-file-upload">
+                    <img
+                      class="file-icon"
+                      src="assets/icons/file.svg"
+                      alt="file-icon"
+                    />
+                    <p>Browse Files</p>
+                  </label>
+                  <input
+                    id="host-image-upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                  />
                 </div>
-                
-                <div class="border-box">
-                    <div class="slide-box">
-                        <div class="browse-host-box">
-                            <div class="description-box">
-                                Drag & Drop or Browse Files
-                            </div>
-                            <div class="host-upload-box">
-                                <label for="host-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
-                                    <p>Browse Files</p>
-                                </label>
-                                <input id="host-image-upload" type="file" accept="image/*" multiple />                                            
-                            </div>
-                            <div class="host-box-container"></div>
-                            <div class="add-reset-container">
-                                <div class="add-reset-box">
-                                    <div class="reset-host-box">
-                                        <img class="reset-icon" src="resources/css/icons/reset.svg" alt="reset-icon">
-                                        Reset
-                                    </div>
-                                </div>
-                                <div class="host-image-number"></div>
-                            </div>
-                        </div>
-    
-                        <div class="next-btn-box">
-                            <button type="button" class="host-next-btn">
-                                NEXT
-                            </button>
-                        </div>
+                <div class="host-box-container"></div>
+                <div class="add-reset-container">
+                  <div class="add-reset-box">
+                    <div class="reset-host-box">
+                      <img
+                        class="reset-icon"
+                        src="assets/icons/reset.svg"
+                        alt="reset-icon"
+                      />
+                      Reset
                     </div>
+                  </div>
+                  <div class="host-image-number"></div>
                 </div>
+              </div>
+
+              <div class="next-btn-box">
+                <button type="button" class="host-next-btn">NEXT</button>
+              </div>
             </div>
-        
-            <div class="step-box">
-                <div class="label-box">
-                    <div class="number-box">2</div>
-                    <p class="step-label">Choose the image to hide</p>
-                </div>
-                
-                <div class="border-box">
-                    <div class="slide-box">
-                        <div class="browse-hidden-box">
-                            <div class="description-box">
-                                Drag & Drop or Browse File
-                            </div>
-                            <div class="hidden-upload-box">
-                                <label for="hidden-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
-                                    <p>Browse File</p>
-                                </label>
-                                <input id="hidden-image-upload" accept="image/*" type="file" />                                            
-                            </div>
-                            <div class="hidden-box-container"></div>
-                            <div class="change-file-box"></div>
-                        </div>
-    
-                        <div class="next-btn-box">
-                            <button type="button" class="back-btn">
-                                BACK
-                            </button>
-                            
-                            <button type="button" class="hidden-next-btn">
-                                NEXT
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-            <div class="step-box">
-                <div class="label-box">
-                    <div class="number-box">3</div>
-                    <p class="step-label">Download embedded images & Key</p>
-                </div>
-                
-                <div class="border-box">
-                    <div class="slide-box">
-                        <div class="zip-file-box">
-                            <div class="loader"></div>
-                            <p>Loading file, please wait...</p>
-                        </div>
-                        <div class="next-btn-box">
-                            <button type="button" class="back-btn">
-                                BACK
-                            </button>
-                            
-                            <a class="download-btn">
-                                DOWNLOAD
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <div class="process-container">
-            <div class="step-box">
-                <div class="label-box">
-                    <div class="number-box">1</div>
-                    <p class="step-label">Choose 2 embedded images</p>
-                </div>
+        <div class="step-box">
+          <div class="label-box">
+            <div class="number-box">2</div>
+            <p class="step-label">Choose the image to hide</p>
+          </div>
 
-                <div class="border-box">
-                    <div class="slide-box">
-                        <div class="browse-embedded-box">
-                            <div class="description-box">
-                                Drag & Drop or Browse Files
-                            </div>
-                            <div class="embedded-upload-box">
-                                <label for="embedded-image-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
-                                    <p>Browse Files</p>
-                                </label>
-                                <input id="embedded-image-upload" type="file" accept="image/*" multiple />                                            
-                            </div>
-                            <div class="embedded-box-container"></div>
-                            <div class="add-reset-container">
-                                <div class="add-reset-box">
-                                    <div class="reset-embedded-box">
-                                        <img class="reset-icon" src="resources/css/icons/reset.svg" alt="reset-icon">
-                                        Reset
-                                    </div>
-                                </div>
-                                <div class="embedded-image-number"></div>
-                            </div>
-                        </div>
-    
-                        <div class="next-btn-box">
-                            <button type="button" class="embedded-next-btn">
-                                NEXT
-                            </button>
-                        </div>
-                    </div>
+          <div class="border-box">
+            <div class="slide-box">
+              <div class="browse-hidden-box">
+                <div class="description-box">Drag & Drop or Browse File</div>
+                <div class="hidden-upload-box">
+                  <label for="hidden-image-upload" class="custom-file-upload">
+                    <img
+                      class="file-icon"
+                      src="assets/icons/file.svg"
+                      alt="file-icon"
+                    />
+                    <p>Browse File</p>
+                  </label>
+                  <input
+                    id="hidden-image-upload"
+                    accept="image/*"
+                    type="file"
+                  />
                 </div>
-            </div>
+                <div class="hidden-box-container"></div>
+                <div class="change-file-box"></div>
+              </div>
 
-            <div class="step-box">
-                <div class="label-box">
-                    <div class="number-box">2</div>
-                    <p class="step-label">Choose the key</p>
-                </div>
-                
-                <div class="border-box">
-                    <div class="slide-box">
-                        <div class="browse-key-box">
-                            <div class="description-box">
-                                Drag & Drop or Browse File
-                            </div>
-                            <div class="key-upload-box">
-                                <label for="key-upload" class="custom-file-upload">
-                                    <img class="file-icon" src="resources/css/icons/file.svg" alt="file-icon">
-                                    <p>Browse File</p>
-                                </label>
-                                <input id="key-upload" type="file" accept=".json" />                                            
-                            </div>
-                            <div class="key-box-container"></div>
-                            <div class="change-file-box"></div>
-                        </div>
-    
-                        <div class="next-btn-box">
-                            <button type="button" class="back-btn">
-                                BACK
-                            </button>
-                            
-                            <button type="button" class="key-next-btn">
-                                NEXT
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+              <div class="next-btn-box">
+                <button type="button" class="back-btn">BACK</button>
 
-            <div class="step-box">
-                <div class="label-box">
-                    <div class="number-box">3</div>
-                    <p class="step-label">Download restored host image & Extracted hidden image</p>
-                </div>
-                
-                <div class="border-box">
-                    <div class="slide-box">
-                        <div class="zip-file-box">
-                            <div class="loader"></div>
-                            <p>Loading file, please wait...</p>
-                        </div>
-                        <div class="next-btn-box">
-                            <button type="button" class="back-btn">
-                                BACK
-                            </button>
-                            
-                            <a class="download-btn">
-                                DOWNLOAD
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                <button type="button" class="hidden-next-btn">NEXT</button>
+              </div>
             </div>
+          </div>
         </div>
+
+        <div class="step-box">
+          <div class="label-box">
+            <div class="number-box">3</div>
+            <p class="step-label">Download embedded images & Key</p>
+          </div>
+
+          <div class="border-box">
+            <div class="slide-box">
+              <div class="zip-file-box">
+                <div class="loader"></div>
+                <p>Loading file, please wait...</p>
+              </div>
+              <div class="next-btn-box">
+                <button type="button" class="back-btn">BACK</button>
+
+                <a class="download-btn"> DOWNLOAD </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-container">
+        <div class="step-box">
+          <div class="label-box">
+            <div class="number-box">1</div>
+            <p class="step-label">Choose 2 embedded images</p>
+          </div>
+
+          <div class="border-box">
+            <div class="slide-box">
+              <div class="browse-embedded-box">
+                <div class="description-box">Drag & Drop or Browse Files</div>
+                <div class="embedded-upload-box">
+                  <label for="embedded-image-upload" class="custom-file-upload">
+                    <img
+                      class="file-icon"
+                      src="assets/icons/file.svg"
+                      alt="file-icon"
+                    />
+                    <p>Browse Files</p>
+                  </label>
+                  <input
+                    id="embedded-image-upload"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                  />
+                </div>
+                <div class="embedded-box-container"></div>
+                <div class="add-reset-container">
+                  <div class="add-reset-box">
+                    <div class="reset-embedded-box">
+                      <img
+                        class="reset-icon"
+                        src="assets/icons/reset.svg"
+                        alt="reset-icon"
+                      />
+                      Reset
+                    </div>
+                  </div>
+                  <div class="embedded-image-number"></div>
+                </div>
+              </div>
+
+              <div class="next-btn-box">
+                <button type="button" class="embedded-next-btn">NEXT</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="label-box">
+            <div class="number-box">2</div>
+            <p class="step-label">Choose the key</p>
+          </div>
+
+          <div class="border-box">
+            <div class="slide-box">
+              <div class="browse-key-box">
+                <div class="description-box">Drag & Drop or Browse File</div>
+                <div class="key-upload-box">
+                  <label for="key-upload" class="custom-file-upload">
+                    <img
+                      class="file-icon"
+                      src="assets/icons/file.svg"
+                      alt="file-icon"
+                    />
+                    <p>Browse File</p>
+                  </label>
+                  <input id="key-upload" type="file" accept=".json" />
+                </div>
+                <div class="key-box-container"></div>
+                <div class="change-file-box"></div>
+              </div>
+
+              <div class="next-btn-box">
+                <button type="button" class="back-btn">BACK</button>
+
+                <button type="button" class="key-next-btn">NEXT</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="label-box">
+            <div class="number-box">3</div>
+            <p class="step-label">
+              Download restored host image & Extracted hidden image
+            </p>
+          </div>
+
+          <div class="border-box">
+            <div class="slide-box">
+              <div class="zip-file-box">
+                <div class="loader"></div>
+                <p>Loading file, please wait...</p>
+              </div>
+              <div class="next-btn-box">
+                <button type="button" class="back-btn">BACK</button>
+
+                <a class="download-btn"> DOWNLOAD </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer>
-        <p>Built and developed by khanhvu-utc</p>
+      <p>Built and developed by khanhvu-utc</p>
     </footer>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/blob-compare@latest"></script>
     <script src="vendors/jquery/jquery-3.7.1.min.js"></script>
-    <script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="scripts/main.js"></script>
+  </body>
 </html>

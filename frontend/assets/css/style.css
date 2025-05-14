@@ -1,0 +1,492 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(250, 250, 250);
+  color: rgba(0, 0, 0, 0.54);
+}
+
+header {
+  min-height: 65px;
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+
+.left-section {
+  flex: 0.25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.version-box {
+  background-color: rgb(240, 240, 240);
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+
+.right-section {
+  flex: 0.25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-box {
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+
+.about-box:hover {
+  cursor: pointer;
+  background-color: rgb(240, 240, 240);
+}
+
+.github-icon-box,
+.setting-icon-box {
+  padding: 12px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-icon-box:hover,
+.setting-icon-box:hover {
+  cursor: pointer;
+  background-color: rgb(235, 235, 235);
+}
+
+.github-icon,
+.setting-icon {
+  width: 25px;
+  height: 25px;
+}
+
+h2 {
+  font-weight: normal;
+  margin-top: 0;
+}
+
+h2,
+.sub-title {
+  text-align: center;
+}
+
+main {
+  padding: 0 20px;
+  flex: 1;
+}
+
+.option-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.option-box {
+  width: 700px;
+  height: 45px;
+  border-radius: 8px;
+  background-color: rgb(240, 240, 240);
+  display: flex;
+  padding: 8px;
+}
+
+.hiding-box,
+.restoring-box {
+  flex: 0.5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.hiding-box {
+  background-color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: 2px 2px rgba(224, 224, 224, 0.2);
+}
+
+.process-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-box {
+  max-width: 680px;
+  width: 100%;
+}
+
+.label-box {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.number-box {
+  margin-right: 8px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background-color: rgb(84, 84, 84);
+  color: rgb(255, 255, 255);
+  font-size: 12px;
+}
+
+.step-label {
+  font-size: 14px;
+}
+
+.border-box {
+  margin: 0 11px 0 11px;
+  padding: 0 20px 25px 20px;
+  border-left: 1px solid rgb(190, 190, 190);
+}
+
+.browse-host-box,
+.browse-hidden-box,
+.browse-embedded-box,
+.browse-key-box {
+  border: solid 5px rgb(240, 240, 240);
+  border-style: dashed;
+  border-radius: 10px;
+  min-height: 100px;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.description-box,
+.host-upload-box,
+.hidden-upload-box,
+.embedded-upload-box,
+.key-upload-box {
+  flex: 0.5;
+  display: flex;
+  align-items: center;
+}
+
+.description-box {
+  color: rgb(0, 0, 0);
+}
+
+.file-icon,
+.add-icon,
+.reset-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+.custom-file-upload,
+.reset-host-box,
+.reset-embedded-box {
+  font-size: 15px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-file-upload {
+  background-color: rgb(240, 240, 240);
+  margin-right: 8px;
+}
+
+.custom-file-upload p {
+  margin: 0;
+  color: rgb(63, 63, 63);
+}
+
+.custom-file-upload:hover {
+  cursor: pointer;
+  background-color: rgb(222, 222, 222);
+}
+
+.host-box-container,
+.embedded-box-container {
+  display: grid;
+  grid-template-columns: 120px 120px 120px 120px;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.hidden-box-container,
+.key-box-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.host-image-box,
+.hidden-image-box,
+.embedded-image-box,
+.key-box {
+  height: 70px;
+  background-color: rgb(240, 240, 240);
+  border-radius: 8px;
+  padding: 20px 0 0 12px;
+  position: relative;
+}
+
+.hidden-image-box,
+.key-box {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.host-image-box p,
+.hidden-image-box p,
+.embedded-image-box p,
+.key-box p {
+  margin: 0;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+}
+
+.host-image-box p:first-child,
+.hidden-image-box p:first-child,
+.embedded-image-box p:first-child,
+.key-box p:first-child {
+  margin-bottom: 5px;
+}
+
+.delete-host-box,
+.delete-hidden-box,
+.delete-embedded-box,
+.delete-key-box {
+  padding: 12px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.delete-host-box:hover,
+.delete-hidden-box:hover,
+.delete-embedded-box:hover,
+.delete-key-box:hover {
+  cursor: pointer;
+  background-color: rgb(230, 230, 230);
+}
+
+.delete-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.add-reset-container {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.change-file-box {
+  justify-content: center;
+}
+
+.add-reset-box {
+  display: flex;
+}
+
+.reset-host-box,
+.reset-embedded-box {
+  background-color: rgb(253, 236, 234);
+  color: rgb(97, 26, 21);
+}
+
+.reset-host-box:hover,
+.reset-embedded-box:hover {
+  cursor: pointer;
+  background-color: rgb(253, 219, 214);
+}
+
+.host-image-number,
+.embedded-image-number {
+  color: rgb(13, 60, 97);
+  font-size: 14px;
+  display: flex;
+  justify-content: right;
+}
+
+.next-btn-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-btn {
+  flex: 0.11;
+  min-width: 70px;
+  background-color: rgb(235, 235, 235);
+}
+
+.hidden-next-btn,
+.download-btn,
+.key-next-btn {
+  flex: 0.875;
+}
+
+.host-next-btn,
+.hidden-next-btn,
+.back-btn,
+.download-btn,
+.embedded-next-btn,
+.key-next-btn {
+  padding: 10px 0 10px 0;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+}
+
+.host-next-btn,
+.hidden-next-btn,
+.download-btn,
+.embedded-next-btn,
+.key-next-btn {
+  background-color: rgb(230, 230, 230);
+  color: rgb(135, 135, 135);
+}
+
+.disable-click {
+  pointer-events: none;
+}
+
+.download-btn {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  cursor: pointer;
+  background-color: rgb(240, 240, 240);
+}
+
+.zip-file-box {
+  padding: 15px 0 15px 15px;
+  background-color: rgb(253, 236, 234);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  color: rgb(97, 26, 21);
+  display: flex;
+  align-items: center;
+}
+
+.zip-file-box p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.zip-file-name {
+  font-weight: 700;
+}
+
+.lock-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.loader {
+  border: 4px solid rgb(243, 243, 243);
+  border-top: 4px solid rgb(28, 76, 91);
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  animation: spin 2s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+footer {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 446px) {
+  .host-box-container,
+  .embedded-box-container {
+    grid-template-columns: 200px;
+  }
+
+  .host-image-box,
+  .embedded-image-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-reset-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-reset-box {
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (min-width: 446px) {
+  .host-box-container,
+  .embedded-box-container {
+    grid-template-columns: 130px 130px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .host-box-container,
+  .embedded-box-container {
+    grid-template-columns: 130px 130px 130px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .host-box-container,
+  .embedded-box-container {
+    grid-template-columns: 120px 120px 120px 120px;
+  }
+}

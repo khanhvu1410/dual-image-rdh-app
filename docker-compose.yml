@@ -1,13 +1,13 @@
 services:
   backend:
-    container_name: rdh-fastapi-container
+    container_name: dual-image-rdh-be
     build: 
       context: ./backend
     ports:
       - "8000:8000"
 
   frontend:
-    container_name: rdh-static-container
+    container_name: dual-image-rdh-fe
     build: 
       context: ./frontend
     ports:
