@@ -109,6 +109,7 @@ export function handleBrowseHiddenImage() {
     .eq(0)
     .on('click', function () {
       switchActiveStep(0, 1);
+      $('.preview-stego-container').empty();
     });
 
   $('.hidden-next-btn').on('click', function () {
