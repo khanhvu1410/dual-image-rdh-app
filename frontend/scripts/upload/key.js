@@ -109,6 +109,7 @@ export function handleBrowseKey() {
     .eq(2)
     .on('click', function () {
       switchActiveStep(3, 4);
+      $('.preview-restored-container').empty();
     });
 
   $('.key-next-btn').on('click', function () {
