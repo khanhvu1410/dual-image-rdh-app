@@ -5,6 +5,12 @@ import { handleBrowseEmbeddedImage } from './upload/embedded.js';
 import { handleBrowseKey } from './upload/key.js';
 
 $(function () {
+  toastr.options = {
+    positionClass: 'toast-custom-position',
+    timeOut: '5000',
+    closeButton: true,
+  };
+
   $('.hiding-box').css('color', 'rgb(63, 63, 63)');
 
   handleClickOptionBox();
