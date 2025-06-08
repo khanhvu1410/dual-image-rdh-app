@@ -1,16 +1,14 @@
 import { checkFileExist } from '../core/file-utils.js';
-
 import {
   switchToAddMode,
   switchToBrowseMode,
   renderFiles,
   switchActiveStep,
 } from '../core/upload-helper.js';
+import { formatBytes } from '../core/file-utils.js';
 
 const hostUploadInput = document.querySelector('#host-image-upload');
-
 export let hostImageList = new DataTransfer();
-
 const browseModeArgs = [
   $('.description-box').eq(0),
   $('.host-upload-box'),
@@ -26,6 +24,18 @@ export function removeFile(index, id) {
   if (hostImageList.items.length <= 0) {
     hostUploadInput.files = hostImageList.files;
     switchToBrowseMode(...browseModeArgs);
+  }
+  const files = hostImageList.files;
+  let sumSize = 0;
+  for (let i = 0; i < files.length; i++) {
+    sumSize += files[i].size;
+  }
+  if (files.length > 1) {
+    $('.host-image-number').text(
+      `${files.length} files, ${formatBytes(sumSize)}`
+    );
+  } else {
+    $('.host-image-number').text(`${files.length} file`);
   }
 }
 

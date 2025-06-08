@@ -10,24 +10,29 @@ export function renderFiles(
 ) {
   let maxLength = 11;
   if (fileNumber == null) {
-    maxLength = 26;
+    maxLength = 20;
   }
 
   let htmls = '';
   let sumSize = 0;
   for (let i = 0; i < files.length; i++) {
     let id = `${fileBox}-${i}`;
+    let imgElement = isImageFile(files[i])
+      ? `<img class="image-preview" src=${URL.createObjectURL(files[i])} />`
+      : `<div class="file-type-box">${shortenName(
+          files[i].type.split('application/')[1],
+          11
+        )}</div>`;
     htmls += `
-            <div class="${fileBox}" id="${id}">
-                <p>${shortenName(files[i].name, maxLength)}</p>
-                <p style="color:rgb(135, 135, 135)">${formatBytes(
-                  files[i].size
-                )}</p>
-                <div class="${deleteBox}" onclick="import('./scripts/upload/${moduleName}').then(module => module.removeFile(${i}, '${id}'))">
-                    <img class="delete-icon" src="assets/icons/delete.svg">
-                </div>
-            </div>
-        `;
+      <div class="${fileBox}" id="${id}">   
+        <p>${shortenName(files[i].name, maxLength)}</p>      
+        ${imgElement}
+        <p style="color:rgb(135, 135, 135)">${formatBytes(files[i].size)}</p>
+        <div class="${deleteBox}" onclick="import('./scripts/upload/${moduleName}').then(module => module.removeFile(${i}, '${id}'))">
+          x
+        </div>
+      </div>
+    `;
     sumSize += files[i].size;
   }
 
@@ -40,6 +45,18 @@ export function renderFiles(
       fileNumber.text(`${files.length} file`);
     }
   }
+}
+
+function isImageFile(file) {
+  const acceptedImageTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/bmp',
+    'image/gif',
+    'image/webp',
+    'image/svg+xml',
+  ];
+  return acceptedImageTypes.includes(file.type);
 }
 
 function enableButton(button) {

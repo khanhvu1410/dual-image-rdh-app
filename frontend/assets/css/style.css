@@ -177,6 +177,12 @@ main {
   margin-bottom: 18px;
 }
 
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .description-box,
 .host-upload-box,
 .hidden-upload-box,
@@ -229,10 +235,16 @@ input[type='file'] {
 }
 
 .host-box-container,
-.embedded-box-container {
+.embedded-box-container,
+.preview-stego-container,
+.preview-restored-container {
   display: grid;
-  grid-template-columns: 120px 120px 120px 120px;
-  gap: 8px;
+  grid-template-columns: 130px 130px 130px 130px;
+  gap: 10px;
+}
+
+.host-box-container,
+.embedded-box-container {
   margin-bottom: 20px;
 }
 
@@ -247,12 +259,17 @@ input[type='file'] {
 .host-image-box,
 .hidden-image-box,
 .embedded-image-box,
-.key-box {
-  height: 70px;
+.key-box,
+.preview-stego-box,
+.preview-restored-box {
   background-color: rgb(240, 240, 240);
   border-radius: 8px;
-  padding: 20px 0 0 12px;
+  padding: 5px 0 5px 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
 }
 
 .hidden-image-box,
@@ -266,31 +283,35 @@ input[type='file'] {
 .host-image-box p,
 .hidden-image-box p,
 .embedded-image-box p,
-.key-box p {
+.key-box p,
+.preview-stego-box p,
+.preview-restored-box p {
   margin: 0;
   font-size: 14px;
   color: rgb(0, 0, 0);
 }
 
-.host-image-box p:first-child,
-.hidden-image-box p:first-child,
-.embedded-image-box p:first-child,
-.key-box p:first-child {
-  margin-bottom: 5px;
+.image-preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+}
+
+.file-type-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
 }
 
 .delete-host-box,
 .delete-hidden-box,
 .delete-embedded-box,
 .delete-key-box {
-  padding: 12px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  top: 2px;
+  right: 6px;
 }
 
 .delete-host-box:hover,
@@ -298,12 +319,7 @@ input[type='file'] {
 .delete-embedded-box:hover,
 .delete-key-box:hover {
   cursor: pointer;
-  background-color: rgb(230, 230, 230);
-}
-
-.delete-icon {
-  width: 18px;
-  height: 18px;
+  color: rgb(97, 26, 21);
 }
 
 .add-reset-container {
@@ -344,6 +360,7 @@ input[type='file'] {
 .next-btn-box {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .back-btn {
@@ -448,12 +465,16 @@ footer {
 
 @media only screen and (max-width: 446px) {
   .host-box-container,
-  .embedded-box-container {
+  .embedded-box-container,
+  .preview-stego-container,
+  .preview-restored-container {
     grid-template-columns: 200px;
   }
 
   .host-image-box,
-  .embedded-image-box {
+  .embedded-image-box,
+  .preview-stego-box,
+  .preview-restored-box {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -472,21 +493,36 @@ footer {
 
 @media only screen and (min-width: 446px) {
   .host-box-container,
-  .embedded-box-container {
+  .embedded-box-container,
+  .preview-stego-container,
+  .preview-restored-container {
     grid-template-columns: 130px 130px;
   }
 }
 
 @media only screen and (min-width: 600px) {
   .host-box-container,
-  .embedded-box-container {
+  .embedded-box-container,
+  .preview-stego-container,
+  .preview-restored-container {
     grid-template-columns: 130px 130px 130px;
   }
 }
 
 @media only screen and (min-width: 768px) {
   .host-box-container,
-  .embedded-box-container {
-    grid-template-columns: 120px 120px 120px 120px;
+  .embedded-box-container,
+  .preview-stego-container,
+  .preview-restored-container {
+    grid-template-columns: 130px 130px 130px 130px;
   }
+}
+
+.toast-custom-position {
+  top: 70px !important;
+  right: 20px !important;
+  bottom: auto !important;
+  left: auto !important;
+  position: fixed;
+  z-index: 999999; /* Make sure it's visible above other elements */
 }

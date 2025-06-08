@@ -5,13 +5,11 @@ import {
   switchToDownloadMode,
   switchActiveStep,
 } from '../core/upload-helper.js';
-
+import { shortenName, formatBytes } from '../core/file-utils.js';
 import { hostImageList } from './host.js';
 
 const hiddenUploadInput = document.querySelector('#hidden-image-upload');
-
 let hiddenImageList = new DataTransfer();
-
 export let hidingDownloadUrl;
 
 export function removeFile(index, id) {
@@ -35,7 +33,11 @@ function embedImage(formData, callback) {
     method: 'POST',
     body: formData,
   })
-    .then((response) => {
+    .then(async (response) => {
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Unknown error occurred');
+      }
       const header = response.headers.get('content-disposition');
       const parts = header.split(';');
       zipFileName = parts[1].split('=')[1];
@@ -51,7 +53,32 @@ function embedImage(formData, callback) {
       );
     })
     .catch((error) => {
-      alert(error);
+      toastr.error(error.message, 'Error');
+    });
+
+  fetch('https://dual-image-rdh-be.onrender.com/embedding/preview/', {
+    method: 'POST',
+    body: formData,
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      let htmls = '';
+      for (let i = 0; i < result.length; i++) {
+        htmls += `
+          <div class="preview-stego-box">
+            <p>${shortenName(result[i].filename, 11)}</p>  
+            <img class="image-preview" src="data:image/bmp;base64,${
+              result[i].content
+            }" />
+            <p style="color:rgb(135, 135, 135)">${formatBytes(
+              result[i].size
+            )}</p>
+          </div>
+        `;
+      }
+      $('.preview-stego-container').html(htmls);
     });
 }
 
