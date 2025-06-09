@@ -5,7 +5,6 @@ import {
   renderFiles,
   switchActiveStep,
 } from '../core/upload-helper.js';
-import { formatBytes } from '../core/file-utils.js';
 
 const hostUploadInput = document.querySelector('#host-image-upload');
 export let hostImageList = new DataTransfer();
@@ -18,25 +17,20 @@ const browseModeArgs = [
   $('.host-next-btn'),
 ];
 
-export function removeFile(index, id) {
+export function removeFile(index, _) {
   hostImageList.items.remove(index);
-  $(`#${id}`).remove();
   if (hostImageList.items.length <= 0) {
     hostUploadInput.files = hostImageList.files;
     switchToBrowseMode(...browseModeArgs);
   }
-  const files = hostImageList.files;
-  let sumSize = 0;
-  for (let i = 0; i < files.length; i++) {
-    sumSize += files[i].size;
-  }
-  if (files.length > 1) {
-    $('.host-image-number').text(
-      `${files.length} files, ${formatBytes(sumSize)}`
-    );
-  } else {
-    $('.host-image-number').text(`${files.length} file`);
-  }
+  renderFiles(
+    hostImageList.files,
+    'host-image-box',
+    'delete-host-box',
+    'host.js',
+    $('.host-box-container'),
+    $('.host-image-number')
+  );
 }
 
 export function handleBrowseHostImage() {
