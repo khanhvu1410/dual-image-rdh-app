@@ -75,8 +75,8 @@ header {
 
 .github-icon,
 .setting-icon {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 
 h2 {
@@ -357,6 +357,62 @@ input[type='file'] {
   justify-content: right;
 }
 
+.password-container {
+  margin-bottom: 18px;
+}
+
+.password-box {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.password-description {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+
+.required-mark {
+  color: rgb(97, 26, 21);
+}
+
+#password-embed,
+#password-extract {
+  padding: 16px 50px 16px 16px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 1px solid rgb(170, 170, 170);
+  color: rgb(63, 63, 63);
+  margin-bottom: 5px;
+}
+
+#password-embed::placeholder,
+#password-extract::placeholder {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.eye-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  position: absolute;
+  top: 3px;
+  right: 5px;
+}
+
+.eye-icon-box:hover {
+  background-color: rgb(245, 245, 245);
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.eye-icon {
+  width: 40px;
+  height: 40px;
+}
+
 .next-btn-box {
   display: flex;
   justify-content: space-between;
@@ -414,10 +470,10 @@ input[type='file'] {
 
 .zip-file-box {
   padding: 15px 0 15px 15px;
-  background-color: rgb(253, 236, 234);
+  background-color: rgb(237, 247, 237);
   border-radius: 8px;
   margin-bottom: 10px;
-  color: rgb(97, 26, 21);
+  color: rgb(30, 70, 32);
   display: flex;
   align-items: center;
 }
@@ -434,6 +490,12 @@ input[type='file'] {
 .lock-icon {
   width: 20px;
   height: 20px;
+  margin-right: 10px;
+}
+
+.error-icon {
+  width: 22px;
+  height: 22px;
   margin-right: 10px;
 }
 

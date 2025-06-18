@@ -7,6 +7,7 @@ from fastapi import UploadFile, HTTPException, status
 from app.core.config import settings
 from app.rdh.embedder import Embedder
 from app.schemas.file import FileResponse
+from app.utils.crypto_utils import AESCipher
 from app.utils.image_utils import read_image
 from app.utils.zip_utils import zip_file
 
@@ -19,14 +20,19 @@ class EmbeddingService:
         self.output_embed_dir = output_embed_dir
         self.allowed_image_mime_types = allowed_image_mime_types
 
-    async def embed_data(self, image_files: list[UploadFile], data_file: UploadFile):
+    async def embed_data(
+        self,
+        image_files: list[UploadFile],
+        data_file: UploadFile,
+        encryption_key: str
+    ):
         data = await self.process_data_file(data_file)
         embedder = Embedder(data)
         file_paths = []
         filename_stem = Path(data_file.filename).stem
 
         # Create and save extract rule file
-        extract_rule_path = self.create_extract_rule_file(embedder, filename_stem)
+        extract_rule_path = self.create_extract_rule_file(embedder, filename_stem, encryption_key)
         file_paths.append(extract_rule_path)
 
         for image_file in image_files:
@@ -43,7 +49,13 @@ class EmbeddingService:
 
         return zip_file(file_paths, f"{filename_stem}_embed.zip")
 
-    async def embed_preview(self, image_files: list[UploadFile], data_file: UploadFile):
+    async def embed_preview(
+        self,
+        image_files: list[UploadFile],
+        data_file: UploadFile,
+        encryption_key: str
+    ):
+        _ = AESCipher(encryption_key)
         data = await self.process_data_file(data_file)
         embedder = Embedder(data)
         results = []
@@ -93,18 +105,27 @@ class EmbeddingService:
         if not unique_values.issubset({0, 255}):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Data file {data_file.filename} is not a binary image (should contain only black and white pixels with values 0 and 255)."
+                detail=f"Data file {data_file.filename} is not a binary image."
             )
         return data
 
-    def create_extract_rule_file(self, embedder: Embedder, filename_stem: str):
+    def create_extract_rule_file(
+        self,
+        embedder: Embedder,
+        filename_stem: str,
+        encryption_key: str
+    ):
         # Create and save the extract rule JSON file
         extract_rule_dict = {
             "data_length": embedder.data_length,
             "extract_rule": embedder.extract_rule
         }
 
-        extract_rule_json = json.dumps(extract_rule_dict, indent=4)
+        extract_rule_json = json.dumps(extract_rule_dict)
+
+        cipher = AESCipher(encryption_key)
+        extract_rule_json = cipher.encrypt(extract_rule_json)
+
         extract_rule_path = self.output_embed_dir / f"{filename_stem}_key.json"
 
         with open(extract_rule_path, "w") as f:

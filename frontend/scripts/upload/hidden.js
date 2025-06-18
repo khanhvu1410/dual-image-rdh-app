@@ -4,6 +4,7 @@ import {
   renderFiles,
   switchToDownloadMode,
   switchActiveStep,
+  switchToErrorMode,
 } from '../core/upload-helper.js';
 import { shortenName, formatBytes } from '../core/file-utils.js';
 import { hostImageList } from './host.js';
@@ -54,6 +55,7 @@ function embedImage(formData, callback) {
     })
     .catch((error) => {
       toastr.error(error.message, 'Error');
+      switchToErrorMode($('.zip-file-box').eq(0), true);
     });
 
   fetch('https://dual-image-rdh-be.onrender.com/embedding/preview/', {
@@ -114,14 +116,13 @@ export function handleBrowseHiddenImage() {
 
   $('.hidden-next-btn').on('click', function () {
     const formData = new FormData();
-
+    const password = $('#password-embed').val();
     for (let file of hostImageList.files) {
       formData.append('image_files', file);
     }
-
     formData.append('data_file', hiddenImageList.files[0]);
+    formData.append('encryption_key', password);
     embedImage(formData, switchToDownloadMode);
-
     switchActiveStep(2, 1);
   });
 }

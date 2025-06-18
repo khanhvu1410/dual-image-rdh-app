@@ -7,6 +7,7 @@ from fastapi import UploadFile, HTTPException, status
 from app.core.config import settings
 from app.rdh.extractor import Extractor
 from app.schemas.file import FileResponse
+from app.utils.crypto_utils import AESCipher
 from app.utils.image_utils import read_image
 from app.utils.zip_utils import zip_file
 
@@ -23,9 +24,10 @@ class ExtractingService:
         self,
         image_file_1: UploadFile,
         image_file_2: UploadFile,
-        key_file: UploadFile
+        key_file: UploadFile,
+        encryption_key: str,
     ):
-        restored_image, restored_data = await self.process_files(image_file_1, image_file_2, key_file)
+        restored_image, restored_data = await self.process_files(image_file_1, image_file_2, key_file, encryption_key)
         file_paths = self.save_result(restored_image, restored_data, image_file_1.filename)
         return zip_file(file_paths, "restored_images.zip")
 
@@ -33,9 +35,10 @@ class ExtractingService:
         self,
         image_file_1: UploadFile,
         image_file_2: UploadFile,
-        key_file: UploadFile
+        key_file: UploadFile,
+        encryption_key: str
     ):
-        restored_image, restored_data = await self.process_files(image_file_1, image_file_2, key_file)
+        restored_image, restored_data = await self.process_files(image_file_1, image_file_2, key_file, encryption_key)
         ext = Path(image_file_1.filename).suffix[1:]
         results = []
 
@@ -71,7 +74,8 @@ class ExtractingService:
         self,
         image_file_1: UploadFile,
         image_file_2: UploadFile,
-        key_file: UploadFile
+        key_file: UploadFile,
+        encryption_key: str
     ):
         # Validate that all images have the same file extension
         extensions = {Path(f.filename).suffix for f in (image_file_1, image_file_2)}
@@ -101,7 +105,8 @@ class ExtractingService:
         if Path(key_file.filename).suffix.lower() != ".json":
             raise HTTPException(400, detail="Key file must have a .json extension.")
 
-        extractor = self.create_extractor(image1, image2, key_file)
+        extractor = self.create_extractor(image1, image2, key_file, encryption_key)
+
         try:
             restored_image, restored_data = extractor.extract_data()
         except:
@@ -112,10 +117,17 @@ class ExtractingService:
 
         return restored_image, restored_data
 
-    def create_extractor(self, image1: Any, image2: Any, key_file: UploadFile):
+    def create_extractor(self, image1: Any, image2: Any, key_file: UploadFile, encryption_key: str):
+        # Read the key file content
+        key_content = key_file.file.read().decode('utf-8')
+
+        # Decrypt the content
+        cipher = AESCipher(encryption_key)
+        key_content = cipher.decrypt(key_content)
+
         try:
             # Parse the key file
-            key_dict = json.load(key_file.file)
+            key_dict = json.loads(key_content)
 
             # Convert keys from strings to integer
             min_dict = {int(k):v for k, v in key_dict["extract_rule"]["min"].items()}
