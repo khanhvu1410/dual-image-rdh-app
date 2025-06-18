@@ -4,6 +4,7 @@ import {
   renderFiles,
   switchToDownloadMode,
   switchActiveStep,
+  switchToErrorMode,
 } from '../core/upload-helper.js';
 import { embeddedImageList } from './embedded.js';
 import { shortenName, formatBytes } from '../core/file-utils.js';
@@ -54,6 +55,7 @@ function extractImage(formData, callback) {
     })
     .catch((error) => {
       toastr.error(error.message, 'Error');
+      switchToErrorMode($('.zip-file-box').eq(1), false);
     });
 
   fetch('https://dual-image-rdh-be.onrender.com/extracting/preview/', {
@@ -109,17 +111,16 @@ export function handleBrowseKey() {
     .eq(2)
     .on('click', function () {
       switchActiveStep(3, 4);
-      $('.preview-restored-container').empty();
     });
 
   $('.key-next-btn').on('click', function () {
     const formData = new FormData();
-
+    const password = $('#password-extract').val();
     formData.append('image_file_1', embeddedImageList.files[0]);
     formData.append('image_file_2', embeddedImageList.files[1]);
     formData.append('key_file', keyList.files[0]);
+    formData.append('encryption_key', password);
     extractImage(formData, switchToDownloadMode);
-
     switchActiveStep(5, 4);
   });
 }

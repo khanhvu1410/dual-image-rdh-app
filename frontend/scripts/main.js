@@ -11,6 +11,18 @@ $(function () {
     closeButton: true,
   };
 
+  $('.eye-icon-box').on('click', function () {
+    const passwordInput = $(this).siblings(
+      'input[type="password"], input[type="text"]'
+    );
+
+    if (passwordInput.attr('type') === 'password') {
+      passwordInput.attr('type', 'text');
+    } else {
+      passwordInput.attr('type', 'password');
+    }
+  });
+
   $('.hiding-box').css('color', 'rgb(63, 63, 63)');
 
   handleClickOptionBox();

@@ -114,9 +114,7 @@ export function switchToAddMode(
     addResetBox.prepend(customFileUpload);
     customFileUpload.children().eq(1).text('Change File');
   }
-
   nextBtn.prop('disabled', false);
-
   enableButton(nextBtn);
 }
 
@@ -139,7 +137,6 @@ export function switchToBrowseMode(
   customFileUpload.children().eq(1).text('Browse Files');
 
   nextBtn.prop('disabled', true);
-
   disableButton(nextBtn);
 }
 
@@ -154,19 +151,29 @@ export function switchToDownloadMode(
     download: `${zipFileName}`,
   });
 
+  zipFileBox.html(`
+    <img class="lock-icon" src="assets/icons/lock.svg" alt="lock-icon">
+    <p><span class="zip-file-name">${zipFileName}</span> was loaded successfully and ready to download</p>
+  `);
+
+  downloadBtn.removeClass('disable-click');
+  enableButton(downloadBtn);
+}
+
+export function switchToErrorMode(zipFileBox, isEmbedding) {
   zipFileBox.css({
-    'background-color': 'rgb(237, 247, 237)',
-    color: 'rgb(30, 70, 32)',
+    'background-color': 'rgb(253, 236, 234)',
+    color: 'rgb(97, 26, 21)',
   });
 
   zipFileBox.html(`
-        <img class="lock-icon" src="assets/icons/lock.svg" alt="lock-icon">
-        <p><span class="zip-file-name">${zipFileName}</span> was loaded successfully and ready to download</p>
-    `);
-
-  downloadBtn.removeClass('disable-click');
-
-  enableButton(downloadBtn);
+    <img class="error-icon" src="assets/icons/error.svg" alt="error-icon">
+    <p>${
+      isEmbedding
+        ? 'We couldn’t hide your data properly. Please try again.'
+        : 'We couldn’t restore your data properly. Please try again.'
+    }</p>
+`);
 }
 
 export function switchActiveStep(activeIndex, inactiveIndex) {
